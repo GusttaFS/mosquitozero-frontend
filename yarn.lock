@@ -1629,6 +1629,16 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
+"@maskito/core@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@maskito/core/-/core-1.4.0.tgz#cfc2152e36e6be658abdacda7f30bb8992bfe800"
+  integrity sha512-Q5o3vQ4c52VzJf6dvA1RgruMHM3uwPCjw2ghwJDNeU7W9xn/iuI61KN/kyuMeZDicRQwE+ddVokg2jEtYiPfJw==
+
+"@maskito/react@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@maskito/react/-/react-1.4.0.tgz#d2113d66afac8599ddf0f1bbd9d8429780e390a3"
+  integrity sha512-vmdBGAyFiujBXMofWblj0KZiGbPMolB3MAKgzMA//vc53TEVq2efvDsok7toCuKzdOBzSNkEPmnNJo0iWnALHg==
+
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
   resolved "https://registry.yarnpkg.com/@nicolo-ribaudo/eslint-scope-5-internals/-/eslint-scope-5-internals-5.1.1-v1.tgz#dbf733a965ca47b1973177dc0bb6c889edcfb129"
