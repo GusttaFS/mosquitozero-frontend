@@ -16,8 +16,11 @@ import {
     IonPage,
     IonTitle,
     IonSelectOption,
-    IonContent
+    IonContent,
+    IonText,
+    IonIcon
 } from '@ionic/react';
+import { warningOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { useMaskito } from '@maskito/react';
 import './register-style.css'
@@ -37,13 +40,18 @@ function Register() {
 
     const [isValidEmail, setIsValidEmail] = useState(undefined);
     const [isValidPhone, setIsValidPhone] = useState(undefined);
+    const [isValidPassword, setIsValidPassword] = useState(undefined);
 
     const validateEmailFormat = (email) => {
         return email.match(/^[A-Z0-9._%+-]+@(gmail|hotmail|outlook)+\.com$/i);
     };
 
     const validatePhoneFormat = (phone) => {
-        return phone.match(/^\(\d{2}\) \d{5}-\d{4}$/i);
+        return phone.match(/^\(\d{2}\) \d{5}-\d{4}$/);
+    };
+
+    const validatePasswordFormat = (password) => {
+        return password.match(/^(.{6,})$/);
     };
 
     const phoneMask = useMaskito({
@@ -62,6 +70,12 @@ function Register() {
         const value = (event.target).value;
         if (value === '') { setIsValidEmail(false); return };
         validatePhoneFormat(value) !== null ? setIsValidPhone(true) : setIsValidPhone(false);
+    };
+
+    const validatePassword = (event) => {
+        const value = (event.target).value;
+        if (value === '') { setIsValidPassword(false); return };
+        validatePasswordFormat(value) !== null ? setIsValidPassword(true) : setIsValidPassword(false);
     };
 
     return (
@@ -87,11 +101,13 @@ function Register() {
                             value={name}
                             onIonInput={(event) => setName(event.target.value)}
                             onIonChange={(event) => setName(event.detail.value)}
+                            onIonFocus={() => {if(!name) setName('') }}
                         />
-                        <IonNote slot="error">Insira o nome completo</IonNote>
+                        <IonNote slot="error">Insira o nome completo.</IonNote>
+                        <IonNote slot="error"><IonText color="warning"><IonIcon icon={warningOutline}/> Obrigatório!</IonText></IonNote>
                     </IonItem>
                     <IonItem fill='outline'
-                        className={`${isValidEmail && email !== '' && 'ion-valid'} ${isValidEmail === false && 'ion-invalid'}`}>
+                        className={`${isValidEmail && 'ion-valid'} ${isValidEmail === false && 'ion-invalid'}`}>
                         <IonLabel position='floating'>Email</IonLabel>
                         <IonInput
                             clearInput={true}
@@ -99,20 +115,23 @@ function Register() {
                             placeholder='email@domain.com'
                             onIonInput={(event) => { validateEmail(event) }}
                             onIonChange={(event) => setEmail(event.detail.value)}
+                            onIonFocus={() => {if(!email) setIsValidEmail(false) }}
                         />
-                        <IonNote slot="error">Insira um email válido</IonNote>
+                        <IonNote slot="error">Insira um email válido.</IonNote>
+                        <IonNote slot="error"><IonText color="warning"><IonIcon icon={warningOutline}/> Obrigatório!</IonText></IonNote>
                     </IonItem>
                     <IonItem fill='outline'
-                        className={`${password && 'ion-valid'} ${password === '' && 'ion-invalid'}`}>
+                        className={`${isValidPassword && 'ion-valid'} ${isValidPassword === false && 'ion-invalid'}`}>
                         <IonLabel position='floating'>Senha</IonLabel>
                         <IonInput
                             clearInput={true}
                             type='password'
-                            value={password}
-                            onIonInput={(event) => setPassword(event.target.value)}
+                            onIonInput={(event) => validatePassword(event)}
                             onIonChange={(event) => setPassword(event.detail.value)}
+                            onIonFocus={() => {if(!password) setIsValidPassword(false) }}
                         />
-                        <IonNote slot="error">Insira uma Senha</IonNote>
+                        <IonNote slot="error">{ !password ? "Insira uma senha." : "A senha deve conter no mínimo 6 caracteres." }</IonNote>
+                        <IonNote slot="error"><IonText color="warning"><IonIcon icon={warningOutline}/> Obrigatório!</IonText></IonNote>
                     </IonItem>
                     <IonItem fill='outline' >
                         <IonLabel position='floating'>Cidade</IonLabel>
