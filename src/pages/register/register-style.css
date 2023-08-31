@@ -1,21 +1,21 @@
-.form {
+.register-content {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    height: 100%;
+}
+
+.register-list {
     margin-left: auto;
     margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
+    padding: 5px 20px;
     min-width: 340px;
+    max-width: 600px;
     background-color: #F5F9FD;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
     border-radius: 20px;
 }
 
 .item {
     margin-top: 10px;
-    width: 100%;
 }
+
