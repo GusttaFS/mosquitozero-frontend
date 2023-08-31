@@ -27,15 +27,15 @@ function Register() {
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const [yars, setYares] = useState('');
     const [city, setCity] = useState();
     const [role, setRole] = useState('');
-    const [situation, setSituation] = useState('');
+    const [phone, setPhone] = useState('');
     const [matricula, setMatricula] = useState('');
+    const [yars, setYares] = useState('');
+    const [situation, setSituation] = useState('');
 
-    const [isTouched, setIsTouched] = useState(false);
-    const [isValidEmail, setIsValidEmail] = useState();
-    const [isValidPhone, setIsValidPhone] = useState();
+    const [isValidEmail, setIsValidEmail] = useState(undefined);
+    const [isValidPhone, setIsValidPhone] = useState(undefined);
 
     const validateEmailFormat = (email) => {
         return email.match(/^[A-Z0-9._%+-]+@(gmail|hotmail|outlook)+\.com$/i);
@@ -45,68 +45,63 @@ function Register() {
         return phone.match(/^\(\d{2}\) \d{5}-\d{4}$/i);
     };
 
-    const validateEmail = (event) => {
-        const value = (event.target).value;
-        setEmail(value);
-        if (value === '') return;
-        validateEmailFormat(value) !== null ? setIsValidEmail(true) : setIsValidEmail(false);
-    };
-
-    const validatePhone = (event) => {
-        const value = (event.target).value;
-        if (value === '') return
-        validatePhoneFormat(value) !== null ? setIsValidPhone(true) : setIsValidPhone(false);
-    };
-
     const phoneMask = useMaskito({
         options: {
             mask: ['(', /\d/, /\d/, ')', ' ', '9', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
         },
     });
 
-    const markTouched = () => {
-        setIsTouched(true);
+    const validateEmail = (event) => {
+        const value = (event.target).value;
+        if (value === '') {setIsValidEmail(false); return};
+        validateEmailFormat(value) !== null ? setIsValidEmail(true) : setIsValidEmail(false);
+    };
+
+    const validatePhone = (event) => {
+        const value = (event.target).value;
+        if (value === '') {setIsValidEmail(false); return};
+        validatePhoneFormat(value) !== null ? setIsValidPhone(true) : setIsValidPhone(false);
     };
 
     return (
         <IonPage>
-            <IonHeader translucent={true}>
+            <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="#"></IonBackButton>
                     </IonButtons>
-                    <IonTitle className="header-title">Cadastro</IonTitle>
+                    <IonTitle>Cadastro {email}</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonList className='form'>
                 <IonItem fill='outline'
-                    className={`${name && 'ion-valid'} ${name === '' && 'ion-invalid'} ${isTouched && 'ion-touched'}`}>
+                    className={`${name && 'ion-valid'} ${name === '' && 'ion-invalid'}`}>
                     <IonLabel position='floating'>Nome</IonLabel>
                     <IonInput
                         clearInput={true}
                         type='text'
+                        required='true'
                         placeholder='Insira o nome completo'
                         value={name}
                         onIonInput={(event) => setName(event.target.value)}
                         onIonChange={(event) => setName(event.detail.value)}
                     />
-                    <IonNote slot="error">Insira o nome</IonNote>
+                    <IonNote slot="error">Insira o nome completo</IonNote>
                 </IonItem>
                 <IonItem fill='outline'
-                    className={`${isValidEmail && email !== '' && 'ion-valid'} ${isValidEmail === false && email === '' && 'ion-invalid'}`}>
+                    className={`${isValidEmail && email !== '' && 'ion-valid'} ${isValidEmail === false && 'ion-invalid'}`}>
                     <IonLabel position='floating'>Email</IonLabel>
                     <IonInput
                         clearInput={true}
                         type='email'
                         placeholder='email@domain.com'
-                        value={email}
-                        onIonInput={(event) => validateEmail(event)}
+                        onIonInput={(event) => {validateEmail(event)}}
                         onIonChange={(event) => setEmail(event.detail.value)}
                     />
-                    <IonNote slot="error">Email inválido</IonNote>
+                    <IonNote slot="error">Insira um email válido</IonNote>
                 </IonItem>
                 <IonItem fill='outline'
-                    className={`${password && 'ion-valid'} ${password === '' && 'ion-invalid'} ${isTouched && 'ion-touched'}`}>
+                    className={`${password && 'ion-valid'} ${password === '' && 'ion-invalid'}`}>
                     <IonLabel position='floating'>Senha</IonLabel>
                     <IonInput
                         clearInput={true}
@@ -120,18 +115,18 @@ function Register() {
                 <IonItem fill='outline' className='item'>
                     <IonLabel position='floating'>Cidade</IonLabel>
                     <IonSelect>
-                        <IonSelectOption value="Campina Grande">Campina Grande</IonSelectOption>
-                        <IonSelectOption value="Recife">Campina Grande</IonSelectOption>
+                        <IonSelectOption value='Campina Grande'>Campina Grande</IonSelectOption>
+                        <IonSelectOption value='Recife'>Recife</IonSelectOption>
                     </IonSelect>
                 </IonItem>
                 <IonItem fill='outline'>
                     <IonLabel position='floating'>Cargo</IonLabel>
                     <IonSelect>
-                        <IonSelectOption value="Agente">Agente</IonSelectOption>
+                        <IonSelectOption value='Agente'>Agente</IonSelectOption>
                     </IonSelect>
                 </IonItem>
                 <IonItem fill='outline'
-                    className={`${isValidPhone && 'ion-valid'} ${isValidPhone === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}>
+                    className={`${isValidPhone && 'ion-valid'} ${isValidPhone === false && 'ion-invalid'}`}>
                     <IonLabel position='floating'>Telefone</IonLabel>
                     <IonInput
                         ref={async (phoneInput) => {
@@ -143,7 +138,6 @@ function Register() {
                         clearInput={true}
                         placeholder='(DDD) 90000-0000'
                         onIonInput={(event) => validatePhone(event)}
-                        onIonBlur={() => markTouched()}
                     />
                     <IonNote slot="error">Telefone inválido</IonNote>
                 </IonItem>
@@ -171,7 +165,7 @@ function Register() {
                 <IonItem fill='outline'>
                     <IonLabel position='floating'>Situação</IonLabel>
                     <IonSelect>
-                        <IonSelectOption value="Disponível">Disponível</IonSelectOption>
+                        <IonSelectOption value='Disponível'>Disponível</IonSelectOption>
                     </IonSelect>
                 </IonItem>
                 <IonButton style={{ marginTop: '5%', padding: 5 }}
