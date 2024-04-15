@@ -1,0 +1,62 @@
+.headerContainer {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background: var(--gradient);
+}
+
+.headerContent {
+    width: 650px;
+    margin: 0 1rem;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pefilLink {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 35px;
+    color: var(--white);
+
+    p {
+        font-size: 18px;
+    }
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+
+    button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        font-size: 16px;
+        color: var(--white);
+
+        background: transparent;
+        border: 0;
+        transform: transform 0.8s;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+}
+
+
+@media (max-width: 650px) {
+    .headerContent {
+        max-width: 650px;
+        margin-right: 1rem;
+        margin-left: 1rem;
+    }
+}

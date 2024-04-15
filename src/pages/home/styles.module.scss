@@ -1,0 +1,92 @@
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.homeContent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 600px;
+    margin-top: 70px;
+}
+
+.homeOptions {
+    flex-direction: column;
+    width: 600px;
+    position: fixed;
+    background: var(--white-smoke);
+    padding-bottom: 8px;
+}
+
+.cycleInfo {
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 550px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    font-size: 18px;
+    color: var(--black);
+}
+
+.pastCyclesLink {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 5px;
+    width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+    font-size: 15px;
+    color: var(--light-blue);
+}
+
+.visitationAreaTitle {
+    margin-top: 1.8rem;
+    font-size: 17px;
+    opacity: 0.8;
+}
+
+.visitationAreasList {
+    width: 550px;
+    margin-top: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.noVisitationAreaMessage {
+    font-size: 18px;
+    color: #888;
+    text-align: center;
+    margin-top: 40px;
+}
+
+@media (max-width: 650px) {
+    .homeContent {
+        width: 100%;
+    }
+
+    .homeOptions {
+        width: 92%;
+    }
+
+    .cycleInfo, .pastCyclesLink, .visitationAreasList {
+        width: 85%;
+    }
+
+    .noVisitationAreaMessage {
+        font-size: 16px;
+        width: 85%;
+    }  
+}

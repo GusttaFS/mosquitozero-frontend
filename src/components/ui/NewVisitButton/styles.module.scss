@@ -1,0 +1,20 @@
+.button {
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  background: var(--light-green);
+  cursor: pointer;
+}
+
+.newVisitButtonLink {
+  display: flex;
+  color: var(--white);
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  gap: 5px;
+}
+
+.button:hover {
+  opacity: 0.8;
+}

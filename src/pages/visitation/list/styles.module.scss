@@ -1,0 +1,117 @@
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.listContent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 600px;
+    margin-top: 70px;
+}
+
+.listOptions {
+    flex-direction: column;
+    width: 600px;
+    position: fixed;
+    background: var(--white-smoke);
+    padding-bottom: 8px;
+}
+
+.rowContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.visitationAreaDetails {
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    background-color: #e6e6e6;
+    padding: 10px 20px;
+    height: fit-content;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 14px;
+    gap: 3px;
+}
+
+.visitationListTitle {
+    margin-top: 1.8rem;
+    font-size: 17px;
+    opacity: 0.8;
+}
+
+.visitationsList {
+    width: 550px;
+    margin-top: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.noVisitsMessage {
+    font-size: 1.2rem;
+    color: #888;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.button {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: var(--white);
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity: 0.8;
+}
+
+.buttonBack {
+    background-color: var(--light-blue);
+}
+
+.buttonNeWVisit {
+    background-color: var(--light-green);
+}
+
+
+@media (max-width: 650px) {
+    .listContent {
+        width: 100%;
+    }
+
+    .listOptions {
+        width: 92%;
+    }
+
+    .cycleInfo, .pastCyclesLink, .visitationAreasList {
+        width: 85%;
+    }
+
+    .noVisitationAreaMessage {
+        font-size: 16px;
+        width: 85%;
+    }  
+}

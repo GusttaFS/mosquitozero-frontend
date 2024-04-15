@@ -1,0 +1,86 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.options {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    position: fixed;
+    width: 605px;
+    background-color: var(--white-smoke);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.rowContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.editOptions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.formList {
+    width: 600px;
+    margin-top: 11rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.button {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: var(--white);
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity: 0.8;
+}
+
+.buttonBack {
+    background-color: var(--light-blue);
+}
+
+.buttonEdit {
+    background-color: #ffae42;
+}
+
+.buttonSave {
+    background-color: var(--light-green);
+}
+
+.buttonCancel {
+    background-color: var(--light-red);
+}
+
+
+@media (max-width: 450px) {
+    .formList {
+        width: 95%;
+    }
+
+    .options {
+        width: 95%;
+    }
+}

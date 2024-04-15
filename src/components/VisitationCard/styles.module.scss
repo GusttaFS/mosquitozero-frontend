@@ -1,0 +1,44 @@
+.containerCenter {
+    background: var(--white);
+    height: auto;
+    width: 100%;
+    border-radius: 10px;
+    padding: 20px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 85%;
+    font-size: 15px;
+}
+
+.rowContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+
+    p {
+        font-size: 13px;
+    }
+}
+
+.hoverLink {
+    border-bottom: 2px solid rgba(0, 159, 227, 1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+@media (max-width: 450px) {
+    .containerCenter {
+        width: 95%;
+    }
+}
