@@ -1,13 +1,14 @@
 import Head from "next/head";
 import styles from './styles.module.scss';
 
-import { Input, Select } from "../../components/ui/Input";
+import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 
 import { AuthContext } from "@/src/contexts/AuthContext";
 
 import Link from 'next/link';
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { Select } from "@/src/components/ui/Select";
 
 export default function SignUp() {
   const { signUp } = useContext(AuthContext);
@@ -86,7 +87,7 @@ export default function SignUp() {
               value={name}
               onChange={(e) => { setName(e.target.value) }}
             />
-            
+
             <Input label="E-mail" required
               placeholder="Digite o seu e-mail"
               type="email"
@@ -96,7 +97,7 @@ export default function SignUp() {
             {!isValidEmail && (
               <p className={styles.errorMessage}>Por favor, insira um e-mail válido.</p>
             )}
-            
+
             <Input label="Senha" required
               placeholder="Digite a sua senha"
               type="password"
@@ -106,7 +107,7 @@ export default function SignUp() {
             {!isValidPassword && (
               <p className={styles.errorMessage}>Insira uma senha com no minimo 8 digitos.</p>
             )}
-            
+
             <div className={styles.inputRow}>
               <Input label="Matrícula" required
                 placeholder="Sua matrícula"
@@ -134,7 +135,7 @@ export default function SignUp() {
             {!isValidPhoneNumber && (
               <p className={styles.errorMessage}>Por favor, insira um telefone válido.</p>
             )}
-            
+
             <Select label="Cidade" required
               options={cities}
               value={city}
