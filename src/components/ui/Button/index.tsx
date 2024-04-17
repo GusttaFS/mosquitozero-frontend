@@ -8,14 +8,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode,
 }
 
-export function Button({ loading, children, ...rest }: ButtonProps){
-  return(
-    <button 
-    className={styles.button}
-    disabled={loading}
-    {...rest}
+export function Button({ loading, children, ...rest }: ButtonProps) {
+  return (
+    <button
+      className={styles.button}
+      disabled={loading}
+      {...rest}
     >
-      { loading ? (
+      {loading ? (
         <FaSpinner color="#262626" size={16} />
       ) : (
         <a className={styles.buttonText}>

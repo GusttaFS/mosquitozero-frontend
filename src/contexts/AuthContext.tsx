@@ -133,19 +133,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    async function createVisitation(visitOrderId: string, { data }: VisitationData) {
+    async function createVisitation(visitationAreaId: string, { data }: VisitationData) {
         try {
             const response = await api.post(`/visitation`, {
                 data,
             }, {
                 headers: {
-                    'visit_order_id': visitOrderId,
+                    'visitation_area_id': visitationAreaId,
                 },
             });
-            Router.push({
-                pathname: '/visitation-details',
-                query: { visitation_id: response.data.id },
-            });
+            //Router.push({
+            //    pathname: '/visitation/details',
+            //    query: { visitation_id: response.data.id },
+            //});
             toast.success("Visita salva com sucesso!");
         } catch (error) {
             throw error;

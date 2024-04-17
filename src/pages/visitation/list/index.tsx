@@ -26,7 +26,7 @@ export default function VisitationList({ visitationsList, visitationAera }) {
           <div className={styles.listOptions}>
             <div className={styles.rowContent}>
               <BackButton href={"/home"} />
-              <NewVisitButton visitationAreaId={undefined} />
+              <NewVisitButton visitationAreaId={visitationAera?.id} />
             </div>
 
             <div className={styles.visitationAreaDetails}>
