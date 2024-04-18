@@ -1,0 +1,16 @@
+.completedTag,
+.pendingTag {
+    width: fit-content;
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.completedTag {
+    background-color: var(--light-green);
+}
+
+.pendingTag {
+    background-color: var(--light-red);
+}

@@ -3,13 +3,10 @@ import Link from 'next/link';
 import styles from './styles.module.scss';
 
 import { SlArrowRight } from "react-icons/sl";
+import { TagCompleted, TagPending } from '../../Tag';
 
 export function VisitationCard({ visitation, visitation_area_id }) {
     const [hovered, setHovered] = useState(false);
-
-    const getStatusTagStyle = () => {
-        return visitation.is_completed ? styles.completedTag : styles.pendingTag;
-    };
 
     return (
         <Link href={{
@@ -40,9 +37,8 @@ export function VisitationCard({ visitation, visitation_area_id }) {
                         </p>
                     )}
                     <p>
-                        <span className={`${styles.label} ${getStatusTagStyle()}`}>
-                            {visitation.is_completed ? "Concluída" : "Pendente"}
-                        </span>
+                        <span className={styles.label}>Status:</span>{" "}
+                        {visitation.is_completed ? <TagCompleted /> : <TagPending />}
                     </p>
                 </div>
                 <SlArrowRight color='rgba(0, 159, 227, 1)' />
