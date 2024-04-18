@@ -1,0 +1,26 @@
+.container {
+    margin-top: 1.5rem;
+    font-size: 14px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    margin-top: 4px;
+}
+
+.label {
+    color: #757575;
+    font-size: 16px;
+}
+
+.button {
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid var(--light-blue);
+    color: var(--light-blue);
+    padding: 0px 1px;
+    margin-left: 8px;
+    background: none;
+}
