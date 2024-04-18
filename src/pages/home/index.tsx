@@ -11,6 +11,9 @@ import { VisitationAreaCard } from "@/src/components/Card/VisitationAreaCard";
 
 import { SlArrowRight } from "react-icons/sl";
 
+type visitationArea = {
+  id: string;
+}
 
 export default function Home({ activeCycle, visitationAreas }) {
   return (
@@ -20,11 +23,11 @@ export default function Home({ activeCycle, visitationAreas }) {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <div className={styles.homeContainer}>
+      <div className={styles.container}>
         <Header />
 
-        <div className={styles.homeContent}>
-          <div className={styles.homeOptions}>
+        <div className={styles.content}>
+          <div className={styles.options}>
             <div className={styles.cycleInfo}>
               <p>Cilco atual:</p>
               <b>{activeCycle?.data.ciclo} / {activeCycle?.data.ano}</b>
@@ -33,12 +36,12 @@ export default function Home({ activeCycle, visitationAreas }) {
               <p>Acessar ciclos anteriores</p>
               <SlArrowRight size={9} />
             </Link>
-            <p className={styles.visitationAreaTitle}>Áreas de visita:</p>
+            <p className={styles.optionsTitle}>Áreas de visita:</p>
           </div>
 
           <div className={styles.visitationAreasList}>
             {visitationAreas && visitationAreas.length > 0 ? (
-              visitationAreas.map((visitationArea) => (
+              visitationAreas.map((visitationArea: visitationArea) => (
                 <VisitationAreaCard
                   key={visitationArea?.id}
                   visitationArea={visitationArea}

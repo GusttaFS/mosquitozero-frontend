@@ -1,11 +1,11 @@
-.homeContainer {
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
 }
 
-.homeContent {
+.content {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -13,7 +13,7 @@
     margin-top: 70px;
 }
 
-.homeOptions {
+.options {
     flex-direction: column;
     width: 600px;
     position: fixed;
@@ -47,7 +47,7 @@
     color: var(--light-blue);
 }
 
-.visitationAreaTitle {
+.optionsTitle {
     margin-top: 1.8rem;
     font-size: 18px;
     opacity: 0.8;
@@ -73,16 +73,16 @@
 }
 
 @media (max-width: 650px) {
-    .homeContent {
+    .content {
         width: 100%;
     }
 
-    .homeOptions {
-        width: 92%;
+    .options {
+        width: 95%;
     }
 
     .cycleInfo, .pastCyclesLink, .visitationAreasList {
-        width: 85%;
+        width: 90%;
     }
 
     .noVisitationAreaMessage {
