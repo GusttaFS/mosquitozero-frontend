@@ -1,11 +1,11 @@
-.listContainer {
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
 }
 
-.listContent {
+.content {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -13,7 +13,7 @@
     margin-top: 70px;
 }
 
-.listOptions {
+.options {
     flex-direction: column;
     width: 600px;
     position: fixed;
@@ -21,7 +21,7 @@
     padding-bottom: 1rem;
 }
 
-.rowContent {
+.optionsRow {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -39,7 +39,7 @@
     justify-content: center;
 }
 
-.visitationListTitle {
+.listTitle {
     margin-top: 1.5rem;
     font-size: 18px;
     opacity: 0.8;
@@ -56,52 +56,27 @@
 }
 
 .noVisitsMessage {
-    font-size: 1.2rem;
+    font-size: 18px;
     color: #888;
     text-align: center;
     margin-top: 20px;
 }
 
-.button {
-    font-size: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    color: var(--white);
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.button:hover {
-    opacity: 0.8;
-}
-
-.buttonBack {
-    background-color: var(--light-blue);
-}
-
-.buttonNeWVisit {
-    background-color: var(--light-green);
-}
-
 
 @media (max-width: 650px) {
-    .listContent {
+    .content {
         width: 100%;
     }
 
-    .listOptions {
-        width: 92%;
+    .options {
+        width: 95%;
     }
 
-    .cycleInfo, .pastCyclesLink, .visitationsList {
-        width: 85%;
+    .visitationsList {
+        width: 90%;
     }
 
-    .noVisitationAreaMessage {
+    .noVisitsMessage {
         font-size: 16px;
         width: 85%;
     }  

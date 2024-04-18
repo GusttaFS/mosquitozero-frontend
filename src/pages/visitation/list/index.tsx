@@ -20,12 +20,12 @@ export default function VisitationList({ visitationsList, visitationAera }) {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <div className={styles.listContainer}>
+      <div className={styles.container}>
         <Header />
 
-        <div className={styles.listContent}>
-          <div className={styles.listOptions}>
-            <div className={styles.rowContent}>
+        <div className={styles.content}>
+          <div className={styles.options}>
+            <div className={styles.optionsRow}>
               <BackButton href={"/home"} />
               <NewVisitButton visitationAreaId={visitationAera?.id} />
             </div>
@@ -35,7 +35,7 @@ export default function VisitationList({ visitationsList, visitationAera }) {
             </div>
 
 
-            <p className={styles.visitationListTitle}>Suas visitas:</p>
+            <p className={styles.listTitle}>Suas visitas:</p>
           </div>
 
           <div className={styles.visitationsList}>
