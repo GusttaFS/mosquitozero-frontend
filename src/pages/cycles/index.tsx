@@ -6,8 +6,8 @@ import { setupAPIClient } from "@/src/services/api";
 import Head from "next/head";
 
 import { Header } from "@/src/components/Header";
-import { BackButton } from '@/src/components/ui/BackButton';
 import { CycleCard } from '@/src/components/CycleCard';
+import { BackButton } from '@/src/components/ui/Button';
 
 
 export default function Cycles({ pastCycles }) {

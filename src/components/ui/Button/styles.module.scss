@@ -19,12 +19,11 @@
   &:hover {
     filter: brightness(1.18);
   }
-
 }
 
 .buttonText {
   font-size: 16px;
-  color: var(--black-olive);
+  color: var(--black);
 }
 
 @keyframes animate {
@@ -35,4 +34,57 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.backButton,
+.newVisitButton,
+.saveButton,
+.editButton,
+.cancelButton {
+  padding: 8px;
+  border: none;
+  color: var(--white);
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.backButtonLink,
+.newVisitButtonLink,
+.saveButton,
+.editButton,
+.cancelButton {
+  display: flex;
+  align-items: center;
+}
+
+.newVisitButtonLink,
+.saveButton,
+.editButton,
+.cancelButton {
+  gap: 4px;
+}
+
+.backButton {
+  background: var(--light-blue);
+}
+
+.newVisitButton {
+  background: var(--light-green);
+}
+
+.saveButton {
+  background-color: var(--light-green);
+}
+
+.editButton {
+  background-color: var(--ligh-orange);
+}
+
+.cancelButton {
+  background-color: var(--light-red);
 }

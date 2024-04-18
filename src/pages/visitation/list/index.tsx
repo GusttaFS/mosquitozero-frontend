@@ -6,10 +6,10 @@ import { setupAPIClient } from "@/src/services/api";
 
 import { Header } from "@/src/components/Header";
 import { VisitationCard } from "@/src/components/VisitationCard";
-import { BackButton } from "@/src/components/ui/BackButton";
-import { NewVisitButton } from "@/src/components/ui/NewVisitButton";
-import { VisitationAreaCard } from "@/src/components/VisitationAreaCard";
+
 import { VisitationAreaDetails } from "@/src/components/VisitationAreaDetails";
+
+import { BackButton, NewVisitButton } from "@/src/components/ui/Button";
 
 
 export default function VisitationList({ visitationsList, visitationAera }) {
@@ -44,7 +44,7 @@ export default function VisitationList({ visitationsList, visitationAera }) {
             ) : (
               visitationsList.map((visitation) => (
                 <VisitationCard
-                  key={visitation?.id} visitation={visitation} />
+                  key={visitation?.id} visitation={visitation} visitation_area_id={visitationAera?.id} />
               ))
             )}
           </div>

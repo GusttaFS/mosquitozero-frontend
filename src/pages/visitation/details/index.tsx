@@ -49,9 +49,9 @@ export default function VisitationDetails({ visitation }) {
 
     await editVisitation(visitation.id, {
       data: formData,
-      deposito: {"value":"a"},
-      amostra: {"value":"a"},
-      tratamento: {"value":"a"}
+      deposito: { "value": "a" },
+      amostra: { "value": "a" },
+      tratamento: { "value": "a" }
     });
 
     setIsEditing(false);
@@ -64,14 +64,14 @@ export default function VisitationDetails({ visitation }) {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <Header />
-
       <div className={styles.container}>
+        <Header />
+
         <div className={styles.options}>
           <div className={styles.rowContent}>
             <Link href={{
-              pathname: '/visitations-list',
-              query: { visit_order_id: "visitation.visitation_area.id" },
+              pathname: '/visitations/list',
+              query: { visitation_area_id: "visitation.visitation_area_id" },
             }}>
               <button className={`${styles.button} ${styles.buttonBack}`}>
                 <IoChevronBackOutline color="white" />
@@ -108,6 +108,9 @@ export default function VisitationDetails({ visitation }) {
               )}
             </div>
           </div>
+          <p className={styles.formTitle}>
+            PESQUISA ENTOMOLÓGICA / TRATAMENTO
+          </p>
         </div>
 
         <form className={styles.formList} onSubmit={handleSubmit}>

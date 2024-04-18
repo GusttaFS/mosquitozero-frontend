@@ -8,77 +8,37 @@ import { AuthContext } from "@/src/contexts/AuthContext";
 
 import { Header } from "@/src/components/Header";
 import { Input } from "@/src/components/ui/Input";
-
-import { VscSaveAs } from "react-icons/vsc";
-import { BackButton } from "@/src/components/ui/BackButton";
 import { Select } from "@/src/components/ui/Select";
 
-export default function Visitation({ visitation_area_id }) {
-  const { createVisitation } = useContext(AuthContext);
+import { VscSaveAs } from "react-icons/vsc";
+import { LuPenSquare } from "react-icons/lu";
+import { MdOutlineCancel } from "react-icons/md";
+import { BackButton, CanceltButton, EditButton, SaveButton } from "@/src/components/ui/Button";
 
-  const imovelOptions = [
-    { "value": "Residencial", "label": "Residencial" },
-    { "value": "Comercial", "label": "Comercial" },
-    { "value": "Terreno Baldio", "label": "Terreno Baldio" },
-    { "value": "Ponto Estrategico", "label": "Ponto Estrategico" },
-    { "value": "Outro", "label": "Outro" },
-  ];
 
-  const visitaOptions = [
-    { "value": "Normal", "label": "Normal" },
-    { "value": "Recuperação", "label": "Recuperação" },
-  ];
-
-  const pendenciaOptions = [
-    { "value": "Recusado", "label": "Recusado" },
-    { "value": "Fechado", "label": "Fechado" },
-  ];
-
-  const [imovelValue, setImovelValue] = useState(imovelOptions[0]);
-  const [visitaValue, setVisitaValue] = useState({ "value": "", "label": "" });
-  const [pendenciaValue, setPendenciaValue] = useState({ "value": "", "label": "" });
+export default function Visitation({ visitation_area_id, visitation }) {
+  const [isEditing, setIsEditing] = useState(false);
 
   const [formData, setFormData] = useState({
-    quarteirao:"",
-    lado: "",
-    logradouro: "",
-    numero: "",
-    complemento: "",
-    imovel: imovelValue.value,
-    visita: visitaValue.value,
-    pendencia: pendenciaValue.value
+    quateirao: visitation?.data?.quarteirao || "",
+    lado: visitation?.data?.lado || "",
+    logradouro: visitation?.data?.logradouro || "",
+    numero: visitation?.data?.numero || "",
   });
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
   };
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    await createVisitation(visitation_area_id, {
-      data: formData,
-      deposito: {"value":"a"},
-      amostra: {"value":"a"},
-      tratamento: {"value":"a"}
-    });
-    //localStorage.removeItem("logradouro");
-    //localStorage.removeItem("numero");
   };
 
   useEffect(() => {
-    const storedLogradouro = localStorage.getItem("logradouro");
-    const storedNumero = localStorage.getItem("numero");
-
-    if (storedLogradouro && storedNumero) {
-      //setFormData({
-      //  logradouro: storedLogradouro,
-      //  numero: storedNumero
-      //});
-    }
   }, []);
 
   return (
@@ -88,95 +48,37 @@ export default function Visitation({ visitation_area_id }) {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <div className={styles.formContainer}>
+      <div className={styles.container}>
         <Header />
 
-        <div className={styles.formContent}>
-          <div className={styles.formOptions}>
-            <div className={styles.rowContent}>
+        <div className={styles.content}>
+          <div className={styles.options}>
+            <div className={styles.optionsRow}>
               <BackButton href={{
                 pathname: '/visitation/list',
                 query: { visitation_area_id: visitation_area_id },
               }} />
-              <button type="submit" className={styles.saveButton} onClick={handleSubmit}>
-                Salvar
-                <VscSaveAs color="white" />
-              </button>
+
+              <div className={styles.editOptions}>
+                {!isEditing && (
+                  <EditButton onClick={handleEditClick} />
+                )}
+                {isEditing && (
+                  <>
+                    <SaveButton onClick={handleSubmit} />
+                    <CanceltButton onClick={handleCancelClick} />
+                  </>
+                )}
+              </div>
             </div>
-            <p className={styles.formTitle}>
+
+            <p>Concluir visita</p>
+            <p className={styles.title}>
               PESQUISA ENTOMOLÓGICA / TRATAMENTO
             </p>
           </div>
 
-          <form className={styles.formList} onSubmit={handleSubmit}>
-
-            <div className={styles.formRowContent}>
-              <Input required
-                label={"N° do quarteirão"}
-                name="quarteirao"
-                type="text"
-                value={formData.quarteirao}
-                onChange={handleInputChange}
-                labelColor={"black"}
-              />
-              <Input required
-                label={"Lado"}
-                name="lado"
-                type="text"
-                value={formData.lado}
-                onChange={handleInputChange}
-                labelColor={"black"}
-              />
-            </div>
-
-            <Input required
-              label={"Nome do Logradouro"}
-              name="logradouro"
-              type="text"
-              value={formData.logradouro}
-              onChange={handleInputChange}
-              labelColor={"black"}
-            />
-
-            <div className={styles.formRowContent}>
-              <Input required
-                label={"Número"}
-                name="numero"
-                type="text"
-                value={formData.numero}
-                onChange={handleInputChange}
-                labelColor={"black"}
-              />
-              <Input required
-                label={"Complemento"}
-                name="complemento"
-                type="text"
-                value={formData.complemento}
-                onChange={handleInputChange}
-                labelColor={"black"}
-              />
-            </div>
-
-            <Select
-              label={"Tipo de Imóvel"}
-              options={imovelOptions}
-              value={imovelValue}
-              onChange={o => setImovelValue(o)}
-            />
-
-            <Select
-              label={"Visita"}
-              options={visitaOptions}
-              value={visitaValue}
-              onChange={o => setVisitaValue(o)}
-            />
-            <Select
-              label={"Pendência"}
-              options={pendenciaOptions}
-              value={pendenciaValue}
-              onChange={o => setPendenciaValue(o)}
-            />
-
+          <form className={styles.form} onSubmit={handleSubmit}>
           </form>
         </div>
       </div>
@@ -186,10 +88,29 @@ export default function Visitation({ visitation_area_id }) {
 
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
-  const { visitation_area_id } = ctx.query;
+  const { visitation_area_id, visitation_id } = ctx.query;
+  const apiClient = setupAPIClient(ctx);
+
+  if (visitation_id) {
+    const response = await apiClient.get(`/visitation`, {
+      headers: {
+        'visitation_id': visitation_id,
+      },
+    });
+
+    return {
+      props: {
+        visitation_area_id: visitation_area_id || "",
+        visitation: response.data,
+      }
+    }
+
+  }
+
   return {
     props: {
-      visitation_area_id: visitation_area_id || ""
+      visitation_area_id: visitation_area_id || "",
+      visitation: {}
     }
   }
 });

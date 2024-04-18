@@ -16,7 +16,7 @@
     flex-direction: column;
     gap: 5px;
     width: 85%;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .rowContent {
@@ -25,21 +25,29 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-top: 5px;
 }
 
 .label {
     color: #757575;
 }
 
+.completedTag,
+.pendingTag {
+    color: var(--white);
+    padding: 4px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.completedTag {
+    background-color: var(--light-green);
+}
+
+.pendingTag {
+    background-color: var(--light-red);
+}
+
 .hoverLink {
     border-bottom: 2px solid rgba(0, 159, 227, 1);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-
-@media (max-width: 450px) {
-    .containerCenter {
-        width: 95%;
-    }
 }

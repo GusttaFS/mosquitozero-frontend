@@ -3,15 +3,21 @@ import Link from 'next/link';
 import styles from './styles.module.scss';
 
 import { SlArrowRight } from "react-icons/sl";
-import { Button } from '../ui/Button';
 
-export function VisitationCard({ visitation }) {
+export function VisitationCard({ visitation, visitation_area_id }) {
     const [hovered, setHovered] = useState(false);
+
+    const getStatusTagStyle = () => {
+        return visitation.is_completed ? styles.completedTag : styles.pendingTag;
+    };
 
     return (
         <Link href={{
-            pathname: '/visitation/details',
-            query: { visitation_id: visitation.id },
+            pathname: '/visitation/form',
+            query: {
+                visitation_area_id: visitation_area_id,
+                visitation_id: visitation.id
+            },
 
         }}
             className={`${styles.containerCenter} ${hovered ? styles.hoverLink : ''}`}
@@ -33,6 +39,11 @@ export function VisitationCard({ visitation }) {
                             <b>{visitation.data.imovel}</b>
                         </p>
                     )}
+                    <p>
+                        <span className={`${styles.label} ${getStatusTagStyle()}`}>
+                            {visitation.is_completed ? "Concluída" : "Pendente"}
+                        </span>
+                    </p>
                 </div>
                 <SlArrowRight color='rgba(0, 159, 227, 1)' />
             </div>
