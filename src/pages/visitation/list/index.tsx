@@ -5,9 +5,9 @@ import { canSSRAuth } from "@/src/utils/canSSRAuth";
 import { setupAPIClient } from "@/src/services/api";
 
 import { Header } from "@/src/components/Header";
-import { VisitationCard } from "@/src/components/VisitationCard";
+import { VisitationCard } from "@/src/components/Card/VisitationCard";
 
-import { VisitationAreaDetails } from "@/src/components/VisitationAreaDetails";
+import { VisitationAreaDetails } from "@/src/components/Card/VisitationAreaDetails";
 
 import { BackButton, NewVisitButton } from "@/src/components/ui/Button";
 

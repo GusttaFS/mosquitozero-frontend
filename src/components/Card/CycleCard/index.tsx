@@ -39,7 +39,7 @@ export function CycleCard({ cycle, cycleId }) {
             {expandedIndex === cycleId && (
                 <div className={styles.visitationAreasList}>
                     {visitationAreas.map((visitationArea) => (
-                        <VisitationAreaCard visitationArea={visitationArea} progress={100} />
+                        <VisitationAreaCard visitationArea={visitationArea} />
                     ))}
                 </div>
             )}

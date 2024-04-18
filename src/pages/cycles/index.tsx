@@ -6,7 +6,7 @@ import { setupAPIClient } from "@/src/services/api";
 import Head from "next/head";
 
 import { Header } from "@/src/components/Header";
-import { CycleCard } from '@/src/components/CycleCard';
+import { CycleCard } from '@/src/components/Card/CycleCard';
 import { BackButton } from '@/src/components/ui/Button';
 
 

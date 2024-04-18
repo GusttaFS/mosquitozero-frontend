@@ -7,7 +7,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 import { Header } from "@/src/components/Header";
-import { VisitationAreaCard } from "@/src/components/VisitationAreaCard";
+import { VisitationAreaCard } from "@/src/components/Card/VisitationAreaCard";
 
 import { SlArrowRight } from "react-icons/sl";
 
