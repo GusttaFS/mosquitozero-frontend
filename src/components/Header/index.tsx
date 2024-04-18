@@ -14,7 +14,7 @@ export function Header() {
     return (
         <header className={styles.headerContainer}>
             <div className={styles.headerContent}>
-                <Link href="/user" className={styles.pefilLink}>
+                <Link href="" className={styles.pefilLink}>
                     <VscAccount />
                     <p>{firstName}</p>
                 </Link>
