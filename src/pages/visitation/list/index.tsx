@@ -9,6 +9,7 @@ import { VisitationCard } from "@/src/components/VisitationCard";
 import { BackButton } from "@/src/components/ui/BackButton";
 import { NewVisitButton } from "@/src/components/ui/NewVisitButton";
 import { VisitationAreaCard } from "@/src/components/VisitationAreaCard";
+import { VisitationAreaDetails } from "@/src/components/VisitationAreaDetails";
 
 
 export default function VisitationList({ visitationsList, visitationAera }) {
@@ -30,8 +31,9 @@ export default function VisitationList({ visitationsList, visitationAera }) {
             </div>
 
             <div className={styles.visitationAreaDetails}>
-              //VisitationDe
+              <VisitationAreaDetails visitationArea={visitationAera} />
             </div>
+
 
             <p className={styles.visitationListTitle}>Suas visitas:</p>
           </div>
@@ -67,6 +69,7 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
       'visitation_area_id': visitation_area_id,
     },
   });
+
   return {
     props: {
       visitationsList: visitations.data,

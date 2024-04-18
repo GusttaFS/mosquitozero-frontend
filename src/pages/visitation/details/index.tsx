@@ -48,7 +48,10 @@ export default function VisitationDetails({ visitation }) {
     event.preventDefault();
 
     await editVisitation(visitation.id, {
-      data: formData
+      data: formData,
+      deposito: {"value":"a"},
+      amostra: {"value":"a"},
+      tratamento: {"value":"a"}
     });
 
     setIsEditing(false);
@@ -68,7 +71,7 @@ export default function VisitationDetails({ visitation }) {
           <div className={styles.rowContent}>
             <Link href={{
               pathname: '/visitations-list',
-              query: { visit_order_id: visitation.visit_order.id },
+              query: { visit_order_id: "visitation.visitation_area.id" },
             }}>
               <button className={`${styles.button} ${styles.buttonBack}`}>
                 <IoChevronBackOutline color="white" />

@@ -60,7 +60,10 @@ export default function Visitation({ visitation_area_id }) {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     await createVisitation(visitation_area_id, {
-      data: formData
+      data: formData,
+      deposito: {"value":"a"},
+      amostra: {"value":"a"},
+      tratamento: {"value":"a"}
     });
     //localStorage.removeItem("logradouro");
     //localStorage.removeItem("numero");

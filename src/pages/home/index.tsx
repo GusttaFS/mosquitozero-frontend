@@ -42,7 +42,7 @@ export default function Home({ activeCycle, visitationAreas }) {
                 <VisitationAreaCard
                   key={visitationArea?.id}
                   visitationArea={visitationArea}
-                  progress={visitationArea?.data.progress} />
+                />
               ))
             ) : (
               <p className={styles.noVisitationAreaMessage}>

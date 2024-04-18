@@ -30,37 +30,29 @@
 }
 
 .visitationAreaDetails {
-    margin-top: 15px;
+    margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
-    background-color: #e6e6e6;
-    padding: 10px 20px;
+    width: 90%;
     height: fit-content;
-    border-radius: 10px;
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    font-size: 14px;
-    gap: 3px;
 }
 
 .visitationListTitle {
-    margin-top: 1.8rem;
+    margin-top: 2rem;
     font-size: 18px;
     opacity: 0.8;
 }
 
 .visitationsList {
     width: 550px;
-    margin-top: 160px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 320px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .noVisitsMessage {
@@ -69,7 +61,6 @@
     text-align: center;
     margin-top: 20px;
 }
-
 
 .button {
     font-size: 16px;
@@ -106,7 +97,7 @@
         width: 92%;
     }
 
-    .cycleInfo, .pastCyclesLink, .visitationAreasList {
+    .cycleInfo, .pastCyclesLink, .visitationsList {
         width: 85%;
     }
 

@@ -3,10 +3,13 @@ import Link from 'next/link';
 import styles from './styles.module.scss';
 
 import { SlArrowRight } from "react-icons/sl";
+import { calculateProgress } from '@/src/scripts/calculateProgress';
 
 
-export function VisitationAreaCard({ visitationArea, progress }) {
+export function VisitationAreaCard({ visitationArea }) {
     const [hovered, setHovered] = useState(false);
+
+    const progress = calculateProgress(visitationArea.completed_visitations, visitationArea.num_visitations);
 
     return (
         <Link href={{

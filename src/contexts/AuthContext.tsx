@@ -38,6 +38,9 @@ type SignUpProps = {
 
 type VisitationData = {
     data: Object;
+    deposito: Object;
+    amostra: Object;
+    tratamento: Object;
 }
 
 type AuthProviderProps = {
@@ -133,10 +136,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    async function createVisitation(visitationAreaId: string, { data }: VisitationData) {
+    async function createVisitation(visitationAreaId: string, { data, deposito, amostra, tratamento}: VisitationData) {
         try {
             const response = await api.post(`/visitation`, {
-                data,
+                data, deposito, amostra, tratamento
             }, {
                 headers: {
                     'visitation_area_id': visitationAreaId,
