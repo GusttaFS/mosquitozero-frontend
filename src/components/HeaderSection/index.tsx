@@ -1,3 +1,4 @@
+import { getHoraAtual } from '@/src/scripts/getHoraAtual';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import styles from './styles.module.scss';
@@ -26,18 +27,18 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
             <div className={styles.row}>
                 <Input
                     label="N° do Quart."
-                    name={"quarteirao"}
+                    name={"data.quarteirao"}
                     type="text"
-                    value={formData.quarteirao}
+                    value={formData?.data?.quarteirao}
                     onChange={handleInputChange}
                     labelColor={"black"}
                     disabled={!isEditing}
                 />
                 <Input
                     label={"Lado"}
-                    name={"lado"}
+                    name={"data.lado"}
                     type="text"
-                    value={formData.lado}
+                    value={formData?.data?.lado}
                     onChange={handleInputChange}
                     labelColor={"black"}
                     disabled={!isEditing}
@@ -45,9 +46,9 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
             </div>
             <Input
                 label={"Logradouro"}
-                name={"logradouro"}
+                name={"data.logradouro"}
                 type="text"
-                value={formData.logradouro}
+                value={formData?.data?.logradouro}
                 onChange={handleInputChange}
                 labelColor={"black"}
                 disabled={!isEditing}
@@ -55,16 +56,16 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
             <div className={styles.row}>
                 <Input
                     label={"Número"}
-                    name={"numero"}
-                    value={formData.numero}
+                    name={"data.numero"}
+                    value={formData?.data?.numero}
                     onChange={handleInputChange}
                     labelColor={"black"}
                     disabled={!isEditing}
                 />
                 <Input
                     label={"Compl."}
-                    name={"complemento"}
-                    value={formData.complemento}
+                    name={"data.complemento"}
+                    value={formData?.data?.complemento}
                     onChange={handleInputChange}
                     labelColor={"black"}
                     disabled={!isEditing}
@@ -74,18 +75,19 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
             <div className={styles.row}>
                 <Input
                     label={"Horário de entrada"}
-                    name="horario"
+                    name={"data.horario"}
                     type="time"
-                    value={formData.horario}
+                    value={formData?.data?.horario}
                     onChange={handleInputChange}
                     labelColor={"black"}
                     disabled={!isEditing}
+                    onClick={() => setFormData({ ...formData, data: { ...formData.data, horario: getHoraAtual() } })}
                 />
                 <Select
                     label={"Tipo do Imóvel"}
                     options={imovelOptions}
-                    value={formData.imovel}
-                    onChange={(o) => setFormData({ ...formData, imovel: o })}
+                    value={formData?.data?.imovel}
+                    onChange={(o) => setFormData({ ...formData, data: { ...formData.data, imovel: o } })}
                     disabled={!isEditing}
                 />
             </div>
@@ -94,15 +96,15 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
                 <Select
                     label={"Visita"}
                     options={visitaOptions}
-                    value={formData.visita}
-                    onChange={(o) => setFormData({ ...formData, visita: o })}
+                    value={formData?.data?.visita}
+                    onChange={(o) => setFormData({ ...formData, data: { ...formData.data, visita: o } })}
                     disabled={!isEditing}
                 />
                 <Select
                     label={"Pendência"}
                     options={pendenciaOptions}
-                    value={formData.pendencia}
-                    onChange={(o) => setFormData({ ...formData, pendencia: o })}
+                    value={formData?.data?.pendencia}
+                    onChange={(o) => setFormData({ ...formData, data: { ...formData.data, pendencia: o } })}
                     disabled={!isEditing}
                 />
             </div>
