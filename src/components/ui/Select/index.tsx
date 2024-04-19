@@ -14,10 +14,11 @@ type SelectProps = {
   value?: SelectOption;
   options: SelectOption[];
   onChange: (value: SelectOption | undefined) => void;
+  disabled: boolean;
 }
 
 
-export function Select({ label, value, options, onChange }: SelectProps) {
+export function Select({ label, value, options, onChange, disabled }: SelectProps) {
   const [isSelected, setIsSelected] = useState(false);
   const [HighlightedIndex, setHighlightedIndex] = useState(0);
 
@@ -30,35 +31,34 @@ export function Select({ label, value, options, onChange }: SelectProps) {
   }, [isSelected]);
 
   return (
-    <div className={styles.selectContainer}>
-      <label className={styles.label}>{label}</label>
-      <div
-        className={styles.select}
-        onBlur={() => setIsSelected(false)}
-        onClick={() => setIsSelected(prev => !prev)}
-        tabIndex={0}
-      >
-        <span className={styles.value}>{value?.label}</span>
-        <IoMdArrowDropdown />
+      <div className={`${styles.container} ${disabled ? styles.disabled : ''}`}>
+        <label className={styles.label}>{label}</label>
+        <div
+          className={styles.select}
+          onBlur={() => setIsSelected(false)}
+          onClick={() => setIsSelected(prev => !prev)}
+          tabIndex={0}
+        >
+          <span className={styles.value}>{value?.label}</span>
+          <IoMdArrowDropdown />
 
-        <ul className={`${styles.options} ${isSelected ? styles.show : ""}`}>
-          {options.map((option, index) => (
-            <li
-              className={`${styles.option} ${index === HighlightedIndex ? styles.highlighted : ""}`}
-              key={option.value}
-              onMouseEnter={() => setHighlightedIndex(index)}
-              onClick={e => {
-                e.stopPropagation;
-                selectOption(option);
-                setIsSelected(true);
-              }}
-            >
-              {option.label}
-            </li>
-          ))}
-        </ul>
-      </div>
+          <ul className={`${styles.options} ${isSelected ? styles.show : ""}`}>
+            {options.map((option, index) => (
+              <li
+                className={`${styles.option} ${index === HighlightedIndex ? styles.highlighted : ""}`}
+                key={option.value}
+                onMouseEnter={() => setHighlightedIndex(index)}
+                onClick={e => {
+                  e.stopPropagation;
+                  selectOption(option);
+                  setIsSelected(true);
+                }}
+              >
+                {option.label}
+              </li>
+            ))}
+          </ul>
+        </div>
     </div>
-
   );
 }
