@@ -31,12 +31,12 @@ export function DepositoSection({ handleInputChange, isEditing, formData }) {
                     />
                 ))}
             </div>
-            <div className={styles.row}>
+            <div className={`${styles.row} ${styles.gap}`}>
                 <Input
                     label={"Eliminado"}
                     name="eliminado"
                     type="number"
-                    value={""}
+                    value={formData?.eliminado}
                     onChange={handleInputChange}
                     labelColor={"black"}
                     disabled={!isEditing}
@@ -45,7 +45,7 @@ export function DepositoSection({ handleInputChange, isEditing, formData }) {
                     label={"Imóveis Inspecionados (LI)"}
                     name="inspecionados"
                     type="number"
-                    value={""}
+                    value={formData?.inspecionados}
                     onChange={handleInputChange}
                     labelColor={"black"}
                     disabled={!isEditing}
