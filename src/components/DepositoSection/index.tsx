@@ -20,11 +20,11 @@ export function DepositoSection({ handleInputChange, isEditing, formData }) {
                     <Input
                         key={index}
                         label={campo.label}
-                        name={campo.name}
+                        name={`deposito.${campo.name}`}
                         type="number"
                         min={0}
                         max={99}
-                        value={formData?.[campo.name]}
+                        value={formData?.deposito?.[campo.name]}
                         onChange={handleInputChange}
                         labelColor={"black"}
                         disabled={!isEditing}
@@ -34,18 +34,18 @@ export function DepositoSection({ handleInputChange, isEditing, formData }) {
             <div className={`${styles.row} ${styles.gap}`}>
                 <Input
                     label={"Eliminado"}
-                    name="eliminado"
+                    name="deposito.eliminado"
                     type="number"
-                    value={formData?.eliminado}
+                    value={formData?.deposito?.eliminado}
                     onChange={handleInputChange}
                     labelColor={"black"}
                     disabled={!isEditing}
                 />
                 <Input
                     label={"Imóveis Inspecionados (LI)"}
-                    name="inspecionados"
+                    name="deposito.inspecionados"
                     type="number"
-                    value={formData?.inspecionados}
+                    value={formData?.deposito?.inspecionados}
                     onChange={handleInputChange}
                     labelColor={"black"}
                     disabled={!isEditing}
