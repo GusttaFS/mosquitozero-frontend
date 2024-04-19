@@ -16,6 +16,7 @@ type AuthContextData = {
     editVisitation: (visitationId: string, data: VisitationData) => Promise<void>;
     createVisitation: (visitOrderId: string, data: VisitationData) => Promise<void>;
     getVisitationAreas: (cycleId: string) => Promise<[]>;
+    patchVisitation: (visitationId: string, visitationAreaId: string) => Promise<VisitationPatchResponse>;
 }
 
 type UserProps = {
@@ -45,6 +46,11 @@ type VisitationData = {
 
 type AuthProviderProps = {
     children: ReactNode;
+}
+
+type VisitationPatchResponse = {
+    id: string
+    is_completed: boolean;
 }
 
 export const AuthContext = createContext({} as AuthContextData)
@@ -107,7 +113,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     async function signUp({ email, password, name, data }: SignUpProps) {
         try {
-            const response = await api.post('/user', {
+            await api.post('/user', {
                 email,
                 password,
                 name,
@@ -121,11 +127,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    async function editVisitation(visitationId: string, { data }: VisitationData) {
+    async function editVisitation(visitationId: string, data: VisitationData) {
         try {
-            const response = await api.patch(`/visitation`, {
-                data,
-            }, {
+            await api.put(`/visitation`, data, {
                 headers: {
                     'visitation_id': visitationId,
                 },
@@ -136,19 +140,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    async function createVisitation(visitationAreaId: string, { data, deposito, amostra, tratamento}: VisitationData) {
+    async function createVisitation(visitationAreaId: string, data: VisitationData) {
         try {
-            const response = await api.post(`/visitation`, {
-                data, deposito, amostra, tratamento
-            }, {
+            await api.post(`/visitation`, data, {
                 headers: {
                     'visitation_area_id': visitationAreaId,
                 },
             });
-            //Router.push({
-            //    pathname: '/visitation/details',
-            //    query: { visitation_id: response.data.id },
-            //});
             toast.success("Visita salva com sucesso!");
         } catch (error) {
             throw error;
@@ -160,6 +158,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
             const response = await api.get(`/visitation-areas`, {
                 headers: {
                     'cycle_id': cycleId,
+                },
+            });
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function patchVisitation(visitationId: string, visitationAreaId: string) {
+        try {
+            const response = await api.patch(`/visitation`, null, {
+                headers: {
+                    'visitation_id': visitationId,
+                    'visitation_area_id': visitationAreaId
                 },
             });
             return response.data;
@@ -177,7 +190,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
             signUp,
             editVisitation,
             createVisitation,
-            getVisitationAreas
+            getVisitationAreas,
+            patchVisitation
         }}>
             {children}
         </AuthContext.Provider>
