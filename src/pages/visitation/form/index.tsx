@@ -7,39 +7,94 @@ import { setupAPIClient } from "@/src/services/api";
 import { AuthContext } from "@/src/contexts/AuthContext";
 
 import { Header } from "@/src/components/Header";
-import { Input } from "@/src/components/ui/Input";
-import { Select } from "@/src/components/ui/Select";
-
-import { VscSaveAs } from "react-icons/vsc";
-import { LuPenSquare } from "react-icons/lu";
-import { MdOutlineCancel } from "react-icons/md";
 import { BackButton, CanceltButton, EditButton, SaveButton } from "@/src/components/ui/Button";
+import { VisitationStatus } from "@/src/components/VisitationStatus";
+import { DepositoSection } from "@/src/components/DepositoSection";
+import { HeaderSection } from "@/src/components/HeaderSection";
+import { AmostraSection } from "@/src/components/AmostraSection";
 
 
-export default function Visitation({ visitation_area_id, visitation }) {
+export default function Visitation({ visitation_area_id, visitation_id, visitation }) {
+  const { createVisitation, editVisitation } = useContext(AuthContext);
+
   const [isEditing, setIsEditing] = useState(false);
-
   const [formData, setFormData] = useState({
-    quateirao: visitation?.data?.quarteirao || "",
-    lado: visitation?.data?.lado || "",
-    logradouro: visitation?.data?.logradouro || "",
-    numero: visitation?.data?.numero || "",
+    data: {
+      quarteirao: visitation?.data?.quarteirao, lado: visitation?.data?.lado,
+      logradouro: visitation?.data?.logradouro, numero: visitation?.data?.numero,
+      complemento: visitation?.data?.complemento, horario: visitation?.data?.horario || "",
+      imovel: { "value": visitation?.data?.imovel, "label": visitation?.data?.imovel },
+      visita: { "value": visitation?.data?.visita, "label": visitation?.data?.visita },
+      pendencia: { "value": visitation?.data?.pendencia, "label": visitation?.data?.pendencia }
+    },
+    deposito: {
+      a1: visitation?.deposito?.a1 || 0, a2: visitation?.deposito?.a2 || 0,
+      b: visitation?.deposito?.b || 0, c: visitation?.deposito?.c || 0,
+      d1: visitation?.deposito?.d1 || 0, d2: visitation?.deposito?.d2 || 0,
+      e: visitation?.deposito?.e || 0, eliminado: visitation?.deposito?.eliminado || 0,
+      inspecionados: visitation?.deposito?.inspecionados || 0
+    },
+    amostra: {
+      inicial: visitation?.amostra?.inicial || "", final: visitation?.amostra?.final || "",
+      tubitos: visitation?.amostra?.final || ""
+    },
+    tratamento: {
+      "value": "value"
+    }
   });
 
+  const [backupFormData, setBackupFormData] = useState({});
+
   const handleEditClick = () => {
+    setBackupFormData(JSON.parse(JSON.stringify(formData)));
     setIsEditing(true);
   };
 
   const handleCancelClick = () => {
+    setFormData(JSON.parse(JSON.stringify(backupFormData)));
     setIsEditing(false);
   };
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    const data = {
+      ...formData,
+      data: {
+        ...formData.data,
+        imovel: formData.data.imovel.value,
+        visita: formData.data.visita.value,
+        pendencia: formData.data.pendencia.value
+      }
+    };
+    if (visitation_id !== "") {
+      try {
+        await editVisitation(visitation_id, data);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      try {
+        await createVisitation(visitation_area_id, data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    setIsEditing(false);
   };
 
-  useEffect(() => {
-  }, []);
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    const [section, fieldName] = name.split('.');
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [section]: {
+        ...prevFormData[section],
+        [fieldName]: value === "" ? undefined : value
+      }
+    }));
+  };
+
 
   return (
     <>
@@ -53,13 +108,12 @@ export default function Visitation({ visitation_area_id, visitation }) {
 
         <div className={styles.content}>
           <div className={styles.options}>
-            <div className={styles.optionsRow}>
+            <div className={`${styles.row} ${styles.optionsButtons}`}>
               <BackButton href={{
                 pathname: '/visitation/list',
                 query: { visitation_area_id: visitation_area_id },
               }} />
-
-              <div className={styles.editOptions}>
+              <div className={styles.optionsEdit}>
                 {!isEditing && (
                   <EditButton onClick={handleEditClick} />
                 )}
@@ -72,13 +126,30 @@ export default function Visitation({ visitation_area_id, visitation }) {
               </div>
             </div>
 
-            <p>Concluir visita</p>
-            <p className={styles.title}>
-              PESQUISA ENTOMOLÓGICA / TRATAMENTO
-            </p>
+            <VisitationStatus visitation={visitation} visitationAreaId={visitation_area_id} />
+
+            <p className={styles.title}>PESQUISA ENTOMOLÓGICA / TRATAMENTO</p>
           </div>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <form className={styles.form}>
+            <HeaderSection
+              handleInputChange={handleInputChange}
+              isEditing={isEditing}
+              formData={formData}
+              setFormData={setFormData}
+            />
+
+            <DepositoSection
+              handleInputChange={handleInputChange}
+              isEditing={isEditing}
+              formData={formData}
+            />
+
+            <AmostraSection
+              handleInputChange={handleInputChange}
+              isEditing={isEditing}
+              formData={formData}
+            />
           </form>
         </div>
       </div>
@@ -100,6 +171,7 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
 
     return {
       props: {
+        visitation_id: visitation_id || "",
         visitation_area_id: visitation_area_id || "",
         visitation: response.data,
       }
@@ -109,6 +181,7 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
 
   return {
     props: {
+      visitation_id: visitation_id || "",
       visitation_area_id: visitation_area_id || "",
       visitation: {}
     }

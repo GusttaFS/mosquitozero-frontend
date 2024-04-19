@@ -19,76 +19,45 @@
     position: fixed;
     background: var(--white-smoke);
     padding-bottom: 1rem;
+    z-index: 100;
 }
 
-.optionsRow {
-    margin-top: 2rem;
+.row {
     display: flex;
     flex-direction: row;
+}
+
+.optionsButtons {
+    margin-top: 2rem;
     justify-content: space-between;
     width: 100%;
 }
 
-.editOptions {
+.optionsEdit {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
-}
-
-.buttonEdit {
-    background-color: #ffae42;
-}
-
-.buttonSave {
-    background-color: var(--light-green);
-}
-
-.buttonCancel {
-    background-color: var(--light-red);
-}
-
-.button {
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    color: var(--white);
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.saveButton:hover {
-    opacity: 0.8;
 }
 
 .title {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 1.8rem;
+    margin-top: 1.5rem;
     width: fit-content;
     font-size: 16px;
     font-weight: bold;
 }
 
-.formList {
-    width: 600px;
-    margin-top: 140px;
+.form {
+    margin-top: 195px;
+    width: 550px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 1rem;
-}
-
-.formRowContent {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    gap: 10px;
+    gap: 8px;
+    margin-bottom: 2rem;
 }
 
 @media (max-width: 650px) {
@@ -100,11 +69,7 @@
         width: 92%;
     }
 
-    .formList {
+    .form {
         width: 90%;
-    }
-
-    .title {
-        font-size: 14px;
     }
 }
