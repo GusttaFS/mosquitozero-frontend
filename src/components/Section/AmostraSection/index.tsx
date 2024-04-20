@@ -1,4 +1,4 @@
-import { Input } from '../ui/Input';
+import { Input } from '../../ui/Input';
 import styles from './styles.module.scss';
 
 export function AmostraSection({ handleInputChange, isEditing, formData }) {

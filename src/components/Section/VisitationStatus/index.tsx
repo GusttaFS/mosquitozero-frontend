@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import styles from './styles.module.scss';
 import { AuthContext } from '@/src/contexts/AuthContext';
-import { TagCompleted, TagPending } from '../Tag';
+import { TagCompleted, TagPending } from '../../Tag';
 
 
 export function VisitationStatus({ visitation, visitationAreaId }) {

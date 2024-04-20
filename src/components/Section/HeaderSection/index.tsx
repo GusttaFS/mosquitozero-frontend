@@ -1,6 +1,6 @@
 import { getHoraAtual } from '@/src/scripts/getHoraAtual';
-import { Input } from '../ui/Input';
-import { Select } from '../ui/Select';
+import { Input } from '../../ui/Input';
+import { Select } from '../../ui/Select';
 import styles from './styles.module.scss';
 
 export function HeaderSection({ handleInputChange, isEditing, formData, setFormData }) {
