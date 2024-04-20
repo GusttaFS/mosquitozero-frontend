@@ -1,21 +1,19 @@
 import { useContext, FormEvent, useState } from 'react';
-
-import Head from "next/head";
-import Image from "next/image";
 import styles from "@/styles/home.module.scss";
 
-import LogoImg from "@/public/logo.png";
+import Link from 'next/link';
+import Head from "next/head";
+import Image from "next/image";
 
 import { Input } from "../components/ui/Input";
 import { Button } from "../components/ui/Button";
+import LogoImg from "@/public/logo.png";
 
 import { AuthContext } from "@/src/contexts/AuthContext";
-
-import Link from 'next/link';
-
 import { canSSRGuest } from '../utils/canSSRGuest';
 
-export default function Home() {
+
+export default function Login() {
   const { signIn } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
@@ -26,14 +24,12 @@ export default function Home() {
 
   async function handleLogin(event: FormEvent) {
     event.preventDefault();
-
     if (email === "" || password === "") {
       setErrorMessage("Por favor, preencha todos os campos.");
       return;
     }
 
     setLoading(true);
-
     try {
       await signIn({
         email: email,
@@ -42,7 +38,6 @@ export default function Home() {
     } catch (error) {
       setErrorMessage("Credenciais inválidas. Por favor, verifique seu e-mail e senha.");
     }
-
     setLoading(false);
   }
 
@@ -53,22 +48,26 @@ export default function Home() {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <div className={styles.containerCenter}>
+      <div className={styles.container}>
         <Image className={styles.img} src={LogoImg} alt="Logo MosquitoZero" priority/>
 
         <div className={styles.login}>
           <form onSubmit={handleLogin}>
-            <Input label="E-mail"
+            <Input 
+              label="E-mail"
               placeholder="Digite aqui o seu e-mail"
               type="email"
               value={email}
+              autoComplete='email'
               onChange={(e) => { setEmail(e.target.value); setErrorMessage("") }}
             />
 
-            <Input label="Senha"
+            <Input 
+              label="Senha"
               placeholder="Digite aqui a sua senha"
               type="password"
               value={password}
+              autoComplete='password'
               onChange={(e) => { setPassword(e.target.value); setErrorMessage("") }}
             />
 
