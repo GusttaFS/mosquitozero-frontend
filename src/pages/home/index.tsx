@@ -30,7 +30,7 @@ export default function Home({ activeCycle, visitationAreas }) {
           <div className={styles.options}>
             <div className={styles.cycleInfo}>
               <p>Cilco atual:</p>
-              <b>{activeCycle?.data.ciclo} / {activeCycle?.data.ano}</b>
+              <b>{activeCycle?.data?.ciclo} / {activeCycle?.data?.ano}</b>
             </div>
             <Link href={"/cycles"} className={styles.pastCyclesLink}>
               <p>Acessar ciclos anteriores</p>
@@ -62,18 +62,30 @@ export default function Home({ activeCycle, visitationAreas }) {
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
   const apiClient = setupAPIClient(ctx);
-  const activeCycle = await apiClient.get('/cycle');
 
-  const visitationAreas = await apiClient.get('/visitation-areas', {
-    headers: {
-      'cycle_id': activeCycle?.data.id
-    },
-  });
+  try {
+    const activeCycle = await apiClient.get('/cycle');
 
+    const visitationAreas = await apiClient.get('/visitation-areas', {
+      headers: {
+        'cycle_id': activeCycle?.data.id
+      },
+    });
+
+    return {
+      props: {
+        activeCycle: activeCycle?.data,
+        visitationAreas: visitationAreas?.data
+      }
+    }
+  } catch (e) {
+    
+  }
+  
   return {
     props: {
-      activeCycle: activeCycle?.data,
-      visitationAreas: visitationAreas?.data
+      activeCycle: {},
+      visitationAreas: []
     }
   }
 });
