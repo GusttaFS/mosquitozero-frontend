@@ -13,16 +13,17 @@ type AuthContextData = {
     signIn: (credentials: SignInProps) => Promise<void>;
     signOut: () => void;
     signUp: (credentials: SignUpProps) => Promise<void>;
-    editVisitation: (visitationId: string, data: VisitationData) => Promise<void>;
     createVisitation: (visitOrderId: string, data: VisitationData) => Promise<void>;
-    getVisitationAreas: (cycleId: string) => Promise<[]>;
+    editVisitation: (visitationId: string, data: VisitationData) => Promise<void>;
     patchVisitation: (visitationId: string, visitationAreaId: string) => Promise<VisitationPatchResponse>;
+    getVisitationAreas: (cycleId: string) => Promise<[]>;
 }
 
 type UserProps = {
     id: string;
     email: string;
     name: string;
+    cargo: string;
 }
 
 type SignInProps = {
@@ -35,6 +36,7 @@ type SignUpProps = {
     password: string;
     name: string;
     data: Object;
+    cargo: string;
 }
 
 type VisitationData = {
@@ -44,16 +46,18 @@ type VisitationData = {
     tratamento: Object;
 }
 
-type AuthProviderProps = {
-    children: ReactNode;
-}
-
 type VisitationPatchResponse = {
     id: string
     is_completed: boolean;
 }
 
+type AuthProviderProps = {
+    children: ReactNode;
+}
+
+
 export const AuthContext = createContext({} as AuthContextData)
+
 
 export function signOut() {
     try {
@@ -64,6 +68,7 @@ export function signOut() {
     }
 }
 
+
 export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<UserProps>();
     const isAuthenticated = !!user;
@@ -72,11 +77,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const { '@nextauth.token': token } = parseCookies();
         if (token) {
             api.get('/user').then(response => {
-                const { id, email, name } = response.data;
+                const { id, email, name, cargo } = response.data;
                 setUser({
                     id,
                     email,
-                    name
+                    name,
+                    cargo
                 });
             }).catch(() => {
                 signOut();
@@ -91,7 +97,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 password
             });
 
-            const { id, name, token } = response.data;
+            const { id, name, token, cargo } = response.data;
 
             setCookie(undefined, '@nextauth.token', token, {
                 maxAge: 60 * 60 * 24,
@@ -101,31 +107,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setUser({
                 id,
                 email,
-                name
+                name,
+                cargo
             });
 
             api.defaults.headers['Authorization'] = `Bearer ${token}`;
-            Router.push('/home');
+            Router.push(cargo === 'supervisor' ? '/supervisor/home' : '/agente/home');
         } catch (error) {
             throw error;
         }
     }
 
-    async function signUp({ email, password, name, data }: SignUpProps) {
-        try {
-            await api.post('/user', {
-                email,
-                password,
-                name,
-                data
-            });
 
+    async function signUp(data : SignUpProps) {
+        try {
+            await api.post('/user', data);
             toast.success("Cadastro realizado com sucesso!")
             Router.push('/');
         } catch (error) {
             throw error;
         }
     }
+
 
     async function editVisitation(visitationId: string, data: VisitationData) {
         try {
@@ -140,6 +143,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
+
     async function createVisitation(visitationAreaId: string, data: VisitationData) {
         try {
             await api.post(`/visitation`, data, {
@@ -152,6 +156,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             throw error;
         }
     }
+
 
     async function getVisitationAreas(cycleId: string) {
         try {
@@ -167,6 +172,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
+
     async function patchVisitation(visitationId: string, visitationAreaId: string) {
         try {
             const response = await api.patch(`/visitation`, null, {
@@ -180,6 +186,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             throw error;
         }
     }
+
 
     return (
         <AuthContext.Provider value={{

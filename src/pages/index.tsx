@@ -11,6 +11,7 @@ import LogoImg from "@/public/logo.png";
 
 import { AuthContext } from "@/src/contexts/AuthContext";
 import { canSSRGuest } from '../utils/canSSRGuest';
+import { setupAPIClient } from '../services/api';
 
 
 export default function Login() {

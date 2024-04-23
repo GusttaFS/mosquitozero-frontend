@@ -88,4 +88,4 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
       visitationAreas: []
     }
   }
-});
+}, 'agente');

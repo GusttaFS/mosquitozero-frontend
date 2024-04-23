@@ -74,8 +74,16 @@ export default function SignUp() {
 
   async function handleSignUp(event: FormEvent) {
     event.preventDefault();
+    const data = {
+      ...formData,
+      cargo: formData.cargo.value
+    }
     setLoading(true);
-    await signUp(formData);
+    try {
+      await signUp(data);
+    } catch (e) {
+      console.log(e);
+    }
     setLoading(false);
   }
 
