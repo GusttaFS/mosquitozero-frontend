@@ -9,18 +9,20 @@ type SelectOption = {
 }
 
 
-type SelectProps = {
+interface SelectProps {
   label: string;
+  labelColor?: 'black' | 'white';
   value?: SelectOption;
   options: SelectOption[];
   onChange: (value: SelectOption | undefined) => void;
   disabled: boolean;
 }
 
-
-export function Select({ label, value, options, onChange, disabled }: SelectProps) {
+export function Select({ label, labelColor, value, options, onChange, disabled }: SelectProps) {
   const [isSelected, setIsSelected] = useState(false);
   const [HighlightedIndex, setHighlightedIndex] = useState(0);
+
+  const labelStyle = labelColor === 'black' ? styles.labelBlack : styles.labelWhite;
 
   function selectOption(option: SelectOption) {
     onChange(option);
@@ -32,7 +34,7 @@ export function Select({ label, value, options, onChange, disabled }: SelectProp
 
   return (
       <div className={`${styles.container} ${disabled ? styles.disabled : ''}`}>
-        <label className={styles.label}>{label}</label>
+        <label className={`${styles.label} ${labelStyle}`}>{label}</label>
         <div
           className={styles.select}
           onBlur={() => setIsSelected(false)}
