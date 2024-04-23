@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styles from './styles.module.scss';
 
 import { SlArrowRight } from "react-icons/sl";
-import { calculateProgress } from '@/src/scripts/calculateProgress';
+import { calculateProgress } from '@/src/utils/calculateProgress';
 
 
 export function VisitationAreaCard({ visitationArea }) {

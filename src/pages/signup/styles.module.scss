@@ -1,47 +1,44 @@
-.containerCenter {
-    min-height: 100vh;
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: rgba(0, 159, 227, 1);
+    min-height: 100vh;
+    background: var(--light-blue);
 }
 
 .signIn {
-    width: 560px;
+    width: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     border-radius: 10px;
-    height: 95vh;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
 
     form {
-        width: 90%;
+        width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 1rem;
     }
 
     form button {
         height: 40px;
         width: auto;
-        font-size: 1.2rem;
     }
 }
 
-.inputRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
-    gap: 5px;
+.img {
+    height: 150px;
+    width: fit-content;
 }
 
-.topText {
+.tittle {
     font-size: 22px;
     color: var(--white);
-    margin-bottom: 40px;
+    margin: 1rem 0;
 }
 
 .text {
@@ -50,7 +47,6 @@
 }
 
 .textLink {
-    margin-top: 0.5rem;
     color: var(--white);
     cursor: pointer;
     text-decoration: underline;
@@ -60,11 +56,11 @@
     color: var(--white);
     font-size: 12px;
     font-weight: bold;
+    margin-top: 4px;
 }
-
 
 @media (max-width: 500px) {
     .signIn {
-        width: 95%;
+        width: 90%;
     }
 }

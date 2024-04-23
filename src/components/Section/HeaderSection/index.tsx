@@ -1,4 +1,4 @@
-import { getHoraAtual } from '@/src/scripts/getHoraAtual';
+import { getHoraAtual } from '@/src/utils/getHoraAtual';
 import { Input } from '../../ui/Input';
 import { Select } from '../../ui/Select';
 import styles from './styles.module.scss';

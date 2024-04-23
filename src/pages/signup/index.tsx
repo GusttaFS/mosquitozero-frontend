@@ -1,62 +1,81 @@
-import Head from "next/head";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import styles from './styles.module.scss';
+
+import Head from "next/head";
+import Image from "next/image";
+import Link from 'next/link';
 
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
+import LogoImg from "@/public/logoImg.png";
 
 import { AuthContext } from "@/src/contexts/AuthContext";
+import { Select } from "@/src/components/ui/Select";
+import { formatPhoneNumber } from "@/src/utils/formatPhoneNumber";
 
-import Link from 'next/link';
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
 
 export default function SignUp() {
   const { signUp } = useContext(AuthContext);
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    data: {
+      telefone: ""
+    },
+    cargo: { "value": "A", "label": "Agente" }
+  });
 
+  const cargoOptions = [
+    { "value": "A", "label": "Agente" },
+    { "value": "S", "label": "Supervisor" },
+  ];
+
+  const [loading, setLoading] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
 
-  async function handleInputEmail(event: ChangeEvent<HTMLInputElement>) {
-    const email = event.target.value;
-    setEmail(email);
+  function handleInputEmail(event: ChangeEvent<HTMLInputElement>) {
+    const email: string = event.target.value;
+    setFormData(formData => ({
+      ...formData,
+      email: email
+    }));
     setIsValidEmail(validateRegex(email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/));
   }
 
-  async function handleInputPassword(event: ChangeEvent<HTMLInputElement>) {
-    const password = event.target.value;
-    setPassword(password);
+  function handleInputPassword(event: ChangeEvent<HTMLInputElement>) {
+    const password: string = event.target.value;
+    setFormData(formData => ({
+      ...formData,
+      password: password
+    }));
     setIsValidPassword(validateRegex(password, /^.{8,}$/));
   }
 
-  async function handleInputPhoneNumber(event: ChangeEvent<HTMLInputElement>) {
-    const phoneNumber = event.target.value;
-    setPhoneNumber(phoneNumber);
-    setIsValidPhoneNumber(validateRegex(phoneNumber, /^\([0-9]{2}\) [9][0-9]{4}-[0-9]{4}$/));
+  function handleInputPhoneNumber(event: ChangeEvent<HTMLInputElement>) {
+    const phoneNumber: string = event.target.value;
+    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+    setFormData(formData => ({
+      ...formData,
+      data: {
+        telefone: formattedPhoneNumber
+      }
+    }));
+    setIsValidPhoneNumber(validateRegex(formattedPhoneNumber, /^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/));
   }
 
-  function validateRegex(value, regex) {
-    const isValid = regex.test(value);
+  function validateRegex(value: string, regex: RegExp): boolean {
+    const isValid: boolean = regex.test(value);
     return isValid;
   }
 
   async function handleSignUp(event: FormEvent) {
     event.preventDefault();
     setLoading(true);
-    let data = {
-      email,
-      password,
-      name,
-      "data": {
-        phoneNumber
-      }
-    }
-    await signUp(data);
+    await signUp(formData);
     setLoading(false);
   }
 
@@ -66,46 +85,72 @@ export default function SignUp() {
         <title>MosquitoZero | Faça seu cadastro</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <div className={styles.containerCenter}>
+
+      <div className={styles.container}>
         <div className={styles.signIn}>
-          <h1 className={styles.topText}>CRIANDO SUA CONTA</h1>
+
+          <Image className={styles.img} src={LogoImg} alt="Logo MosquitoZero" priority />
+          <h1 className={styles.tittle}>CRIANDO SUA CONTA</h1>
+
           <form onSubmit={handleSignUp}>
-            <Input label="Nome" required
+            <Input
+              required
+              label="Nome"
               placeholder="Digite o seu nome completo"
               type="text"
-              value={name}
-              onChange={(e) => { setName(e.target.value) }}
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
 
-            <Input label="E-mail" required
-              placeholder="Digite o seu e-mail"
-              type="email"
-              value={email}
-              onChange={handleInputEmail}
-            />
-            {!isValidEmail && (
-              <p className={styles.errorMessage}>Por favor, insira um e-mail válido.</p>
-            )}
+            <div >
+              <Input
+                required
+                label="E-mail"
+                placeholder="Digite o seu e-mail"
+                type="email"
+                value={formData.email}
+                onChange={handleInputEmail}
+              />
+              {!isValidEmail && (
+                <p className={styles.errorMessage}>Por favor, insira um e-mail válido.</p>
+              )}
+            </div>
 
-            <Input label="Senha" required
-              placeholder="Digite a sua senha"
-              type="password"
-              value={password}
-              onChange={handleInputPassword}
-            />
-            {!isValidPassword && (
-              <p className={styles.errorMessage}>Insira uma senha com no minimo 8 digitos.</p>
-            )}
+            <div>
+              <Input
+                required
+                label="Senha"
+                placeholder="Digite a sua senha"
+                type="password"
+                value={formData.password}
+                onChange={handleInputPassword}
+              />
+              {!isValidPassword && (
+                <p className={styles.errorMessage}>Insira uma senha com no mínimo 8 caracteres.</p>
+              )}
+            </div>
 
-            <Input label="Telefone" required
-              placeholder="Ex: (DDD) 9XXXX-XXXX"
-              type="tel"
-              value={phoneNumber}
-              onChange={handleInputPhoneNumber}
+            <div>
+              <Input
+                required
+                label="Telefone"
+                placeholder="Ex: (DDD) 9XXXX-XXXX"
+                type="tel"
+                value={formData.data.telefone}
+                onChange={handleInputPhoneNumber}
+              />
+              {!isValidPhoneNumber && (
+                <p className={styles.errorMessage}>Por favor, insira um telefone válido.</p>
+              )}
+            </div>
+
+            <Select
+              label={"Cargo"}
+              options={cargoOptions}
+              value={formData.cargo}
+              onChange={(o) => setFormData({ ...formData, cargo: o })}
+              disabled={false}
             />
-            {!isValidPhoneNumber && (
-              <p className={styles.errorMessage}>Por favor, insira um telefone válido.</p>
-            )}
 
             <Button
               type="submit"
