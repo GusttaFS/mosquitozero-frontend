@@ -19,40 +19,28 @@
     position: fixed;
     background: var(--white-smoke);
     padding-bottom: 1rem;
+    z-index: 100;
 }
 
-.cycleInfo {
-    margin-top: 2rem;
-    margin-left: auto;
-    margin-right: auto;
-    width: 550px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-    font-size: 18px;
-    color: var(--black);
-}
-
-.pastCyclesLink {
+.row {
     display: flex;
     flex-direction: row;
-    align-items: baseline;
-    gap: 5px;
-    width: 550px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 8px;
-    font-size: 15px;
-    color: var(--light-blue);
 }
 
-.newCycleButton {
+.optionsButtons {
+    margin-top: 2rem;
+    justify-content: space-between;
     width: 100%;
+}
+
+.agenteDetails {
     margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    height: fit-content;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: center;
 }
 
 .title {
@@ -61,16 +49,13 @@
     opacity: 0.8;
 }
 
-.visitationAreasList {
+.list {
+    margin-top: 220px;
     width: 550px;
-    margin-top: 200px;
     margin-left: auto;
     margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .message {
@@ -86,15 +71,10 @@
     }
 
     .options {
-        width: 95%;
+        width: 92%;
     }
 
-    .cycleInfo, .pastCyclesLink, .visitationAreasList {
+    .list {
         width: 90%;
     }
-
-    .noVisitationAreaMessage {
-        font-size: 16px;
-        width: 85%;
-    }  
 }

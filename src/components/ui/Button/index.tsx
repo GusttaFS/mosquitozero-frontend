@@ -7,6 +7,7 @@ import { IoChevronBackOutline } from 'react-icons/io5';
 import { LuPenSquare } from 'react-icons/lu';
 import { VscSaveAs } from 'react-icons/vsc';
 import { MdOutlineCancel } from 'react-icons/md';
+import { IoMdAdd } from 'react-icons/io';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean,
@@ -45,16 +46,13 @@ export function BackButton({ href }) {
 }
 
 
-export function NewVisitButton({ visitationAreaId }) {
+export function NewLabelButton({ href, label }) {
   return (
     <button className={styles.newVisitButton}>
-      <Link href={{
-        pathname: '/visitation/form',
-        query: { visitation_area_id: visitationAreaId },
-      }}
+      <Link href={href}
         className={styles.newVisitButtonLink}
       >
-        Nova Visita
+        {label}
         <LuPenSquare color="white" />
       </Link>
     </button>

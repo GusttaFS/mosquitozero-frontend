@@ -1,10 +1,10 @@
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { parseCookies, destroyCookie } from "nookies";
 import { AuthTokenError } from "../services/errors/AuthTokenError";
-import { getTokenCargo } from "./getTokenCargo";
+import { getTokenType } from "./getTokenType";
 
 
-export function canSSRAuth<P>(fn: GetServerSideProps<P>, authCargo: string) {
+export function canSSRAuth<P>(fn: GetServerSideProps<P>, authType: string) {
     return async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<P>> => {
         const cookies = parseCookies(ctx);
 
@@ -20,11 +20,11 @@ export function canSSRAuth<P>(fn: GetServerSideProps<P>, authCargo: string) {
         }
 
         if (token) {
-            const cargo = getTokenCargo(token);
-            if (cargo && cargo !== authCargo) {
+            const type = getTokenType(token);
+            if (type && type !== authType) {
                 return {
                     redirect: {
-                        destination: `/${cargo}/home`,
+                        destination: `/${type}/home`,
                         permanent: false
                     }
                 }

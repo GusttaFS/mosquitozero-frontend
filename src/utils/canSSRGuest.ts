@@ -1,18 +1,17 @@
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { parseCookies } from "nookies";
-import { getTokenCargo } from "./getTokenCargo";
+import { getTokenType } from "./getTokenType";
 
 
 export function canSSRGuest<P>(fn: GetServerSideProps<P>) {
     return async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<P>> => {
         const token = parseCookies(ctx)['@nextauth.token'];
         if (token) {
-            const cargo = getTokenCargo(token);
-            if (cargo) {
-                console.log(cargo);
+            const type = getTokenType(token);
+            if (type) {
                 return {
                     redirect: {
-                        destination: `/${cargo}/home`,
+                        destination: `/${type}/home`,
                         permanent: false
                     }
                 };

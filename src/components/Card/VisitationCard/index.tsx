@@ -10,12 +10,11 @@ export function VisitationCard({ visitation, visitation_area_id }) {
 
     return (
         <Link href={{
-            pathname: '/visitation/form',
+            pathname: 'agente/visitation/form',
             query: {
                 visitation_area_id: visitation_area_id,
                 visitation_id: visitation.id
             },
-
         }}
             className={`${styles.containerCenter} ${hovered ? styles.hoverLink : ''}`}
             onMouseEnter={() => setHovered(true)}

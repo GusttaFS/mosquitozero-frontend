@@ -13,6 +13,8 @@ type AuthContextData = {
     signIn: (credentials: SignInProps) => Promise<void>;
     signOut: () => void;
     signUp: (credentials: SignUpProps) => Promise<void>;
+    createCycle: (data: CycleData) => Promise<void>;
+    createVisitationArea: (cycleId: string, userId: string, data: VisitationAreaData) => Promise<void>;
     createVisitation: (visitOrderId: string, data: VisitationData) => Promise<void>;
     editVisitation: (visitationId: string, data: VisitationData) => Promise<void>;
     patchVisitation: (visitationId: string, visitationAreaId: string) => Promise<VisitationPatchResponse>;
@@ -46,9 +48,19 @@ type VisitationData = {
     tratamento: Object;
 }
 
+
+
 type VisitationPatchResponse = {
     id: string
     is_completed: boolean;
+}
+
+type CycleData = {
+    data: Object;
+}
+
+type VisitationAreaData = {
+    data: Object;
 }
 
 type AuthProviderProps = {
@@ -143,7 +155,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-
     async function createVisitation(visitationAreaId: string, data: VisitationData) {
         try {
             await api.post(`/visitation`, data, {
@@ -157,6 +168,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
+    async function createCycle(data: CycleData) {
+        try {
+            await api.post('/cycle', data);
+            toast.success("Novo ciclo criado com sucesso!");
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async function createVisitationArea(cycleId: string, userId: string, data: VisitationAreaData) {
+        try {
+            await api.post(`/visitation-area`, data, {
+                headers: {
+                    'cycle_id': cycleId,
+                    'user_id': userId
+                },
+            });
+            toast.success("Visita atribuida com sucesso!");
+        } catch (error) {
+            throw error;
+        }
+    }
 
     async function getVisitationAreas(cycleId: string) {
         try {
@@ -195,6 +228,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
             signIn,
             signOut,
             signUp,
+            createCycle,
+            createVisitationArea,
             editVisitation,
             createVisitation,
             getVisitationAreas,

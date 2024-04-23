@@ -13,7 +13,7 @@ export function VisitationAreaCard({ visitationArea }) {
 
     return (
         <Link href={{
-            pathname: "/visitation/list",
+            pathname: "agente/visitation/list",
             query: { visitation_area_id: visitationArea.id },
         }}
             className={`${styles.areaCardContainer} ${hovered ? styles.hoverLink : ''}`}

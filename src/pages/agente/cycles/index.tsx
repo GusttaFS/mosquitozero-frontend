@@ -23,7 +23,7 @@ export default function Cycles({ pastCycles }) {
 
         <div className={styles.cyclesContent}>
           <div className={styles.cyclesOptions}>
-            <BackButton href={"/home"} />
+            <BackButton href={"agente/home"} />
             <p className={styles.visitationAreaTitle}>Ciclos anteriores:</p>
           </div>
 
@@ -54,4 +54,4 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
       pastCycles: pastCycles.data,
     }
   }
-});
+}, 'agente');
