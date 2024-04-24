@@ -18,11 +18,11 @@
     width: 600px;
     position: fixed;
     background: var(--white-smoke);
+    padding-top: 2rem;
     padding-bottom: 1rem;
 }
 
 .cycleInfo {
-    margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
     width: 550px;
@@ -47,15 +47,15 @@
     color: var(--light-blue);
 }
 
-.optionsTitle {
-    margin-top: 1.8rem;
+.title {
+    margin-top: 1.5rem;
     font-size: 18px;
     opacity: 0.8;
 }
 
-.visitationAreasList {
+.list {
     width: 550px;
-    margin-top: 160px;
+    margin-top: 160.4px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -65,7 +65,7 @@
     margin-bottom: 3rem;
 }
 
-.noVisitationAreaMessage {
+.message {
     font-size: 18px;
     color: #888;
     text-align: center;
@@ -81,12 +81,14 @@
         width: 95%;
     }
 
-    .cycleInfo, .pastCyclesLink, .visitationAreasList {
+    .cycleInfo,
+    .pastCyclesLink,
+    .list {
         width: 90%;
     }
 
     .noVisitationAreaMessage {
         font-size: 16px;
         width: 85%;
-    }  
+    }
 }

@@ -1,21 +1,19 @@
 import styles from './styles.module.scss';
-
 import { canSSRAuth } from "@/src/utils/canSSRAuth";
 import { setupAPIClient } from "@/src/services/api";
-
 import Head from "next/head";
 import Link from "next/link";
-
 import { Header } from "@/src/components/Header";
 import { VisitationAreaCard } from "@/src/components/Card/VisitationAreaCard";
-
 import { SlArrowRight } from "react-icons/sl";
 
-type visitationArea = {
+
+type VisitationArea = {
   id: string;
 }
 
-export default function Home({ activeCycle, visitationAreas }) {
+
+export default function Home({ activeCycle, visitationAreas, user }) {
   return (
     <>
       <Head>
@@ -32,24 +30,32 @@ export default function Home({ activeCycle, visitationAreas }) {
               <p>Cilco atual:</p>
               <b>{activeCycle?.data?.ciclo} / {activeCycle?.data?.ano}</b>
             </div>
-            <Link href={"/cycles"} className={styles.pastCyclesLink}>
+            <Link href={"/agente/cycle/list"} className={styles.pastCyclesLink}>
               <p>Acessar ciclos anteriores</p>
               <SlArrowRight size={9} />
             </Link>
-            <p className={styles.optionsTitle}>Áreas de visita:</p>
+            <p className={styles.title}>Áreas de visita:</p>
           </div>
 
-          <div className={styles.visitationAreasList}>
+          <div className={styles.list}>
             {visitationAreas && visitationAreas.length > 0 ? (
-              visitationAreas.map((visitationArea: visitationArea) => (
+              visitationAreas.map((visitationArea: VisitationArea) => (
                 <VisitationAreaCard
+                  href={{
+                    pathname: "/agente/visitation/list",
+                    query: {
+                      cycle_id: activeCycle?.id,
+                      user_id: user?.id,
+                      visitation_area_id: visitationArea.id
+                    },
+                  }}
                   key={visitationArea?.id}
                   visitationArea={visitationArea}
                 />
               ))
             ) : (
-              <p className={styles.noVisitationAreaMessage}>
-                Você não tem áreas atribuídas
+              <p className={styles.message}>
+                Sem áreas atribuídas
               </p>
             )}
           </div>
@@ -63,29 +69,35 @@ export default function Home({ activeCycle, visitationAreas }) {
 export const getServerSideProps = canSSRAuth(async (ctx) => {
   const apiClient = setupAPIClient(ctx);
 
-  try {
-    const activeCycle = await apiClient.get('/cycle');
+  let activeCycle = { id: "" };
+  let user = { id: "" };
+  let visitationAreas = [];
 
-    const visitationAreas = await apiClient.get('/visitation-areas', {
+  try {
+    const response = await apiClient.get('/cycle');
+    activeCycle = response.data;
+  } catch (e) { }
+
+  try {
+    const response = await apiClient.get('/user');
+    user = response.data;
+  } catch (e) { }
+
+  try {
+    const response = await apiClient.get('/visitation-areas', {
       headers: {
-        'cycle_id': activeCycle?.data.id
+        'user_id': user.id,
+        'cycle_id': activeCycle.id
       },
     });
+    visitationAreas = response.data;
+  } catch (e) { }
 
-    return {
-      props: {
-        activeCycle: activeCycle?.data,
-        visitationAreas: visitationAreas?.data
-      }
-    }
-  } catch (e) {
-    
-  }
-  
   return {
     props: {
-      activeCycle: {},
-      visitationAreas: []
+      activeCycle: activeCycle,
+      visitationAreas: visitationAreas,
+      user: user
     }
   }
 }, 'agente');

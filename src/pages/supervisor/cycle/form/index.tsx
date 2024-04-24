@@ -6,7 +6,7 @@ import { canSSRAuth } from "@/src/utils/canSSRAuth";
 import { AuthContext } from "@/src/contexts/AuthContext";
 
 import { Header } from "@/src/components/Header";
-import { BackButton, SaveButton } from "@/src/components/ui/Button";
+import { SaveButton } from "@/src/components/ui/Button";
 import { Input } from "@/src/components/ui/Input";
 import { toast } from "react-toastify";
 import router from "next/router";

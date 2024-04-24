@@ -24,25 +24,14 @@
     gap: 10px;
 }
 
-.noVisitationAreaMessage {
+.message {
     font-size: 12px;
     color: #888;
     text-align: center;
 }
 
+.visitationAreasList,
 .agentesList {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-left: 5px;
-    padding-top: 5px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    border-left: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-}
-
-.visitationAreasList {
     display: flex;
     flex-direction: column;
     gap: 10px;

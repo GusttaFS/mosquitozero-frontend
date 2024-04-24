@@ -1,13 +1,11 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import Head from "next/head";
 import styles from './styles.module.scss';
-
 import { canSSRAuth } from "@/src/utils/canSSRAuth";
 import { setupAPIClient } from "@/src/services/api";
 import { AuthContext } from "@/src/contexts/AuthContext";
-
 import { Header } from "@/src/components/Header";
-import { BackButton, CanceltButton, EditButton, SaveButton } from "@/src/components/ui/Button";
+import { CanceltButton, EditButton, SaveButton } from "@/src/components/ui/Button";
 import { VisitationStatus } from "@/src/components/Section/VisitationStatus";
 import { DepositoSection } from "@/src/components/Section/DepositoSection";
 import { HeaderSection } from "@/src/components/Section/HeaderSection";
@@ -15,7 +13,7 @@ import { AmostraSection } from "@/src/components/Section/AmostraSection";
 import { TratamentoSection } from "@/src/components/Section/TratamentoSection";
 
 
-export default function Visitation({ visitation_area_id, visitation_id, visitation }) {
+export default function VisitationForm({ visitation_area_id, visitation_id, visitation }) {
   const { createVisitation, editVisitation } = useContext(AuthContext);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -112,10 +110,6 @@ export default function Visitation({ visitation_area_id, visitation_id, visitati
         <div className={styles.content}>
           <div className={styles.options}>
             <div className={`${styles.row} ${styles.optionsButtons}`}>
-              <BackButton href={{
-                pathname: '/visitation/list',
-                query: { visitation_area_id: visitation_area_id },
-              }} />
               <div className={styles.optionsEdit}>
                 {!isEditing && (
                   <EditButton onClick={handleEditClick} />
@@ -195,4 +189,4 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
       visitation: {}
     }
   }
-}, 'supervisor');
+}, 'agente');

@@ -1,11 +1,11 @@
-.cyclesContainer {
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
 }
 
-.cyclesContent {
+.content {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -13,34 +13,46 @@
     margin-top: 70px;
 }
 
-.cyclesOptions {
+.options {
     flex-direction: column;
     width: 600px;
     position: fixed;
     background: var(--white-smoke);
     padding-bottom: 8px;
-    padding-top: 2rem;
 }
 
-.visitationAreaTitle {
+.cycleInfo {
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 550px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    font-size: 18px;
+    color: var(--black);
+}
+
+.title {
     margin-top: 1.5rem;
-    font-size: 17px;
+    font-size: 18px;
     opacity: 0.8;
 }
 
-.cyclesList {
+.list {
     width: 550px;
-    margin-top: 135px;
+    margin-top: 130px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
-.noCyclesMessage {
+.message {
     font-size: 18px;
     color: #888;
     text-align: center;
@@ -49,19 +61,19 @@
 
 
 @media (max-width: 650px) {
-    .cyclesContent {
+    .content {
         width: 100%;
     }
 
-    .cyclesOptions {
-        width: 92%;
+    .options {
+        width: 95%;
     }
 
-    .cyclesList {
-        width: 85%;
+    .cycleInfo, .list {
+        width: 90%;
     }
 
-    .noCyclesMessage {
+    .message {
         font-size: 16px;
         width: 85%;
     }  

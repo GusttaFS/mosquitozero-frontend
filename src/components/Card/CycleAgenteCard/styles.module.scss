@@ -1,8 +1,8 @@
-.cycleItem {
+.container {
     width: 100%;
 }
 
-.cycleContent {
+.content {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -13,18 +13,18 @@
     border-bottom: 1px solid #ccc;
 }
 
-.cycleContentExp {
+.contentExp {
     border: none;
 }
 
-.cycleInfo {
+.info {
     display: flex;
     align-items: center;
     flex-direction: row;
     gap: 10px;
 }
 
-.noVisitationAreaMessage {
+.message {
     font-size: 12px;
     color: #888;
     text-align: center;

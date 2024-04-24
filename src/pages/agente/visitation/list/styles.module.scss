@@ -18,19 +18,19 @@
     width: 600px;
     position: fixed;
     background: var(--white-smoke);
+    padding-top: 2rem;
     padding-bottom: 1rem;
 }
 
-.optionsRow {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.addVisitButton {
     width: 100%;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
-.visitationAreaDetails {
-    margin-top: 1rem;
+.details {
     margin-left: auto;
     margin-right: auto;
     width: 90%;
@@ -39,15 +39,15 @@
     justify-content: center;
 }
 
-.listTitle {
+.title {
     margin-top: 1.5rem;
     font-size: 18px;
     opacity: 0.8;
 }
 
-.visitationsList {
+.list {
     width: 550px;
-    margin-top: 310px;
+    margin-top: 348.2px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,7 +55,7 @@
     margin-bottom: 2rem;
 }
 
-.noVisitsMessage {
+.message {
     font-size: 18px;
     color: #888;
     text-align: center;
@@ -72,12 +72,12 @@
         width: 95%;
     }
 
-    .visitationsList {
+    .list {
         width: 90%;
     }
 
-    .noVisitsMessage {
+    .message {
         font-size: 16px;
         width: 85%;
-    }  
+    }
 }
