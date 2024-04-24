@@ -42,7 +42,7 @@ export function DepositoSection({ handleInputChange, isEditing, formData }) {
                     disabled={!isEditing}
                 />
                 <Input
-                    label={"Imóveis Inspecionados (LI)"}
+                    label={"Imóveis Inspecionados"}
                     name="deposito.inspecionados"
                     type="number"
                     value={formData?.deposito?.inspecionados}

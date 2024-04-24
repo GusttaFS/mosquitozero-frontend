@@ -26,7 +26,7 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
         <div className={styles.container}>
             <div className={styles.row}>
                 <Input
-                    label="N° do Quart."
+                    label="N° do Quart.:"
                     name={"data.quarteirao"}
                     type="text"
                     value={formData?.data?.quarteirao}
@@ -35,7 +35,7 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
                     disabled={!isEditing}
                 />
                 <Input
-                    label={"Lado"}
+                    label={"Lado:"}
                     name={"data.lado"}
                     type="text"
                     value={formData?.data?.lado}
@@ -45,7 +45,7 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
                 />
             </div>
             <Input
-                label={"Logradouro"}
+                label={"Logradouro:"}
                 name={"data.logradouro"}
                 type="text"
                 value={formData?.data?.logradouro}
@@ -55,7 +55,7 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
             />
             <div className={styles.row}>
                 <Input
-                    label={"Número"}
+                    label={"Número:"}
                     name={"data.numero"}
                     value={formData?.data?.numero}
                     onChange={handleInputChange}
@@ -63,7 +63,7 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
                     disabled={!isEditing}
                 />
                 <Input
-                    label={"Compl."}
+                    label={"Compl.:"}
                     name={"data.complemento"}
                     value={formData?.data?.complemento}
                     onChange={handleInputChange}
@@ -74,7 +74,7 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
 
             <div className={styles.row}>
                 <Input
-                    label={"Horário de entrada"}
+                    label={"Horário de entrada:"}
                     name={"data.horario"}
                     type="time"
                     value={formData?.data?.horario}
@@ -84,28 +84,31 @@ export function HeaderSection({ handleInputChange, isEditing, formData, setFormD
                     onClick={() => setFormData({ ...formData, data: { ...formData.data, horario: getHoraAtual() } })}
                 />
                 <Select
-                    label={"Tipo do Imóvel"}
+                    label={"Tipo do Imóvel:"}
                     options={imovelOptions}
                     value={formData?.data?.imovel}
                     onChange={(o) => setFormData({ ...formData, data: { ...formData.data, imovel: o } })}
                     disabled={!isEditing}
+                    labelColor='black'
                 />
             </div>
 
             <div className={styles.row}>
                 <Select
-                    label={"Visita"}
+                    label={"Visita:"}
                     options={visitaOptions}
                     value={formData?.data?.visita}
                     onChange={(o) => setFormData({ ...formData, data: { ...formData.data, visita: o } })}
                     disabled={!isEditing}
+                    labelColor='black'
                 />
                 <Select
-                    label={"Pendência"}
+                    label={"Pendência:"}
                     options={pendenciaOptions}
                     value={formData?.data?.pendencia}
                     onChange={(o) => setFormData({ ...formData, data: { ...formData.data, pendencia: o } })}
                     disabled={!isEditing}
+                    labelColor='black'
                 />
             </div>
         </div>
