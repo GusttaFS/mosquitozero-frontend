@@ -117,7 +117,6 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
   const { cycle_id, user_id, visitation_area_id } = ctx.query;
   const apiClient = setupAPIClient(ctx);
 
-  let visitation = {};
   let agente = {};
   let cycle = {};
   let visitationArea = {};

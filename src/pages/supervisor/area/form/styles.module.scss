@@ -16,17 +16,15 @@
 .options {
     flex-direction: column;
     width: 600px;
-    position: fixed;
     background: var(--white-smoke);
     padding-bottom: 1rem;
-    z-index: 100;
 }
 
 .details {
     margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
-    width: 90%;
+    width: 95%;
     height: fit-content;
     display: flex;
     justify-content: center;
@@ -50,7 +48,7 @@
 }
 
 .form {
-    margin-top: 246.8px;
+    margin-top: 1rem;
     width: 550px;
     margin-left: auto;
     margin-right: auto;

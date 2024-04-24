@@ -1,12 +1,28 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './styles.module.scss';
-
 import { SlArrowRight } from "react-icons/sl";
+import { AuthContext } from '@/src/contexts/AuthContext';
 
 
 export function AgenteCard({ agente, cycleId }) {
+    const { getVisitationAreas } = useContext(AuthContext);
     const [hovered, setHovered] = useState(false);
+    const [totalAreas, setTotalAreas] = useState(null);
+
+    useEffect(() => {
+        async function getTotalVisitationAreas() {
+            try {
+                const response = await getVisitationAreas(agente.id, cycleId);
+                const totalAreasFromResponse = response.length;
+                setTotalAreas(totalAreasFromResponse);
+            } catch (error) {
+                console.error('Erro ao obter o total de áreas de visitação:', error);
+                setTotalAreas(0);
+            }
+        }
+        getTotalVisitationAreas();
+    }, [getVisitationAreas, agente.id, cycleId]);
 
     return (
         <Link href={{
@@ -29,6 +45,13 @@ export function AgenteCard({ agente, cycleId }) {
                         <p>
                             <span className={styles.label}>E-mail:</span>{" "}
                             <b>{agente.email}</b>
+                        </p>
+                    )}
+
+                    {totalAreas !== null && (
+                        <p>
+                            <span className={styles.label}>Áreas atribuídas:</span>{" "}
+                            <b>{totalAreas}</b>
                         </p>
                     )}
                 </div>

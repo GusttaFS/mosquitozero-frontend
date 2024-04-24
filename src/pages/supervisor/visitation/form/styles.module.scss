@@ -16,17 +16,15 @@
 .options {
     flex-direction: column;
     width: 600px;
-    position: fixed;
     background: var(--white-smoke);
     padding-top: 2rem;
     padding-bottom: 1rem;
-    z-index: 100;
 }
 
 .details {
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 95%;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -55,14 +53,14 @@
 }
 
 .form {
-    margin-top: 437.6px;
+    margin-top: 1rem;
     width: 550px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 @media (max-width: 650px) {

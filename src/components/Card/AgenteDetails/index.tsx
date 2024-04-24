@@ -1,9 +1,10 @@
+import { calculateAreasProgress } from '@/src/utils/calculateProgress';
 import styles from './styles.module.scss';
 
 
 export function AgenteDetails({ agente, cycle, visitationAreas }) {
 
-    const progress = 100;
+    const progress = calculateAreasProgress(visitationAreas || []);
 
     return (
         <div className={styles.container}>
