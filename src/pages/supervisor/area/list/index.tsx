@@ -3,7 +3,7 @@ import Head from "next/head";
 import styles from './styles.module.scss';
 import { canSSRAuth } from "@/src/utils/canSSRAuth";
 import { Header } from "@/src/components/Header";
-import { BackButton, NewLabelButton } from "@/src/components/ui/Button";
+import { NewLabelButton } from "@/src/components/ui/Button";
 import { VisitationAreaCard } from "@/src/components/Card/VisitationAreaCard";
 import { setupAPIClient } from "@/src/services/api";
 import { AgenteDetails } from "@/src/components/Card/AgenteDetails";
@@ -14,7 +14,8 @@ type visitationArea = {
 }
 
 
-export default function AreaList({ agente, cycle_id, visitationAreas }) {
+export default function AreaList({ cycle_id, user_id, agente, visitationAreas, cycle }) {
+
 
   return (
     <>
@@ -28,18 +29,24 @@ export default function AreaList({ agente, cycle_id, visitationAreas }) {
 
         <div className={styles.content}>
           <div className={styles.options}>
-            <div className={`${styles.row} ${styles.optionsButtons}`}>
-              <BackButton href={"/supervisor/home"} />
+            <div className={styles.details}>
+              <AgenteDetails
+                agente={agente}
+                visitationAreas={visitationAreas}
+                cycle={cycle}
+              />
+            </div>
+            <div className={styles.attAreaButton}>
               <NewLabelButton
                 href={{
                   pathname: "/supervisor/area/form",
-                  query: { cycle_id: cycle_id, user_id: agente.id },
+                  query: { 
+                    cycle_id: cycle_id, 
+                    user_id: user_id,
+                  },
                 }}
                 label={"Atribuir Área"}
               />
-            </div>
-            <div className={styles.agenteDetails}>
-              <AgenteDetails agente={agente} />
             </div>
 
             <p className={styles.title}>Áreas de visita atribuidas:</p>
@@ -49,7 +56,15 @@ export default function AreaList({ agente, cycle_id, visitationAreas }) {
             {visitationAreas && visitationAreas.length > 0 ? (
               visitationAreas.map((visitationArea: visitationArea) => (
                 <VisitationAreaCard
-                  key={visitationArea?.id}
+                  href={{
+                    pathname: "/supervisor/visitation/list",
+                    query: {
+                      cycle_id: cycle_id,
+                      user_id: user_id,
+                      visitation_area_id: visitationArea.id
+                    },
+                  }}
+                  key={visitationArea.id}
                   visitationArea={visitationArea}
                 />
               ))
@@ -70,16 +85,26 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
   const { cycle_id, user_id } = ctx.query;
   const apiClient = setupAPIClient(ctx);
 
-  let visitationAreas = [];
   let agente = {};
+  let cycle = {};
+  let visitationAreas = [];
 
   try {
-    const response = await apiClient.get('/user', {
+    const response = await apiClient.get('/user/id', {
       headers: {
         'user_id': user_id,
       },
     });
     agente = response.data;
+  } catch (e) { }
+
+  try {
+    const response = await apiClient.get('/cycle/id', {
+      headers: {
+        cycle_id: cycle_id
+      },
+    });
+    cycle = response.data;
   } catch (e) { }
 
   try {
@@ -95,7 +120,9 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
   return {
     props: {
       cycle_id: cycle_id,
+      user_id: user_id,
       agente: agente,
+      cycle: cycle,
       visitationAreas: visitationAreas
     }
   }

@@ -10,12 +10,12 @@ export function AreaSection({ handleInputChange, formData, setFormData }) {
     ];
 
     const atividadeOptions = [
-        { "value": "LI", "label": "LI-Levantamento de índice" },
-        { "value": "LI+T", "label": "LI+T-Levantamento de índice + Tratamento" },
-        { "value": "PE", "label": "PE-Ponto Estratégico" },
-        { "value": "T", "label": "T-Tratamento" },
-        { "value": "DF", "label": "DF-Delimitação de Foco" },
-        { "value": "PVE", "label": "PVE-Pesquisa Vetorial Especial" },
+        { "value": "LI-Levantamento de índice", "label": "LI-Levantamento de índice" },
+        { "value": "LI+T-Levantamento de índice + Tratamento", "label": "LI+T-Levantamento de índice + Tratamento" },
+        { "value": "PE-Ponto Estratégico", "label": "PE-Ponto Estratégico" },
+        { "value": "T-Tratamento", "label": "T-Tratamento" },
+        { "value": "DF-Delimitação de Foco", "label": "DF-Delimitação de Foco" },
+        { "value": "PVE-Pesquisa Vetorial Especial", "label": "PVE-Pesquisa Vetorial Especial" },
     ];
 
     return (
@@ -55,9 +55,9 @@ export function AreaSection({ handleInputChange, formData, setFormData }) {
                 />
                 <Input
                     label={"Categ. localid.:"}
-                    name={"data.catg_localidae"}
+                    name={"data.catg_localidade"}
                     type="text"
-                    value={formData?.data?.catg_localidae}
+                    value={formData?.data?.catg_localidade}
                     onChange={handleInputChange}
                     labelColor={"black"}
                 />

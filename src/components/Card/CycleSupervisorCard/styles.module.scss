@@ -1,0 +1,55 @@
+.container {
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 10px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    border-bottom: 1px solid #ccc;
+}
+
+.contentExp {
+    border: none;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.noVisitationAreaMessage {
+    font-size: 12px;
+    color: #888;
+    text-align: center;
+}
+
+.agentesList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.visitationAreasList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}

@@ -18,14 +18,16 @@ type AuthContextData = {
     createVisitation: (visitOrderId: string, data: VisitationData) => Promise<void>;
     editVisitation: (visitationId: string, data: VisitationData) => Promise<void>;
     patchVisitation: (visitationId: string, visitationAreaId: string) => Promise<VisitationPatchResponse>;
-    getVisitationAreas: (cycleId: string) => Promise<[]>;
+    getPastCycles: () => Promise<[]>;
+    getAgentes: () => Promise<[]>;
+    getVisitationAreas: (userId: string, cycleId: string) => Promise<[]>;
 }
 
 type UserProps = {
     id: string;
     email: string;
     name: string;
-    cargo: string;
+    type: string;
 }
 
 type SignInProps = {
@@ -38,7 +40,7 @@ type SignUpProps = {
     password: string;
     name: string;
     data: Object;
-    cargo: string;
+    type: string;
 }
 
 type VisitationData = {
@@ -47,8 +49,6 @@ type VisitationData = {
     amostra: Object;
     tratamento: Object;
 }
-
-
 
 type VisitationPatchResponse = {
     id: string
@@ -89,12 +89,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const { '@nextauth.token': token } = parseCookies();
         if (token) {
             api.get('/user').then(response => {
-                const { id, email, name, cargo } = response.data;
+                const { id, email, name, type } = response.data;
                 setUser({
                     id,
                     email,
                     name,
-                    cargo
+                    type
                 });
             }).catch(() => {
                 signOut();
@@ -109,7 +109,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 password
             });
 
-            const { id, name, token, cargo } = response.data;
+            const { id, name, token, type } = response.data;
 
             setCookie(undefined, '@nextauth.token', token, {
                 maxAge: 60 * 60 * 24,
@@ -120,11 +120,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 id,
                 email,
                 name,
-                cargo
+                type
             });
 
             api.defaults.headers['Authorization'] = `Bearer ${token}`;
-            Router.push(cargo === 'supervisor' ? '/supervisor/home' : '/agente/home');
+            Router.push(type === 'supervisor' ? '/supervisor/home' : '/agente/home');
         } catch (error) {
             throw error;
         }
@@ -136,33 +136,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
             await api.post('/user', data);
             toast.success("Cadastro realizado com sucesso!")
             Router.push('/');
-        } catch (error) {
-            throw error;
-        }
-    }
-
-
-    async function editVisitation(visitationId: string, data: VisitationData) {
-        try {
-            await api.put(`/visitation`, data, {
-                headers: {
-                    'visitation_id': visitationId,
-                },
-            });
-            toast.success("Visita salva com sucesso!");
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async function createVisitation(visitationAreaId: string, data: VisitationData) {
-        try {
-            await api.post(`/visitation`, data, {
-                headers: {
-                    'visitation_area_id': visitationAreaId,
-                },
-            });
-            toast.success("Visita salva com sucesso!");
         } catch (error) {
             throw error;
         }
@@ -191,20 +164,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    async function getVisitationAreas(cycleId: string) {
+    async function createVisitation(visitationAreaId: string, data: VisitationData) {
         try {
-            const response = await api.get(`/visitation-areas`, {
+            await api.post(`/visitation`, data, {
                 headers: {
-                    'cycle_id': cycleId,
+                    'visitation_area_id': visitationAreaId,
                 },
             });
-            console.log(response.data);
-            return response.data;
+            toast.success("Visita salva com sucesso!");
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 
+    async function editVisitation(visitationId: string, data: VisitationData) {
+        try {
+            await api.put(`/visitation`, data, {
+                headers: {
+                    'visitation_id': visitationId,
+                },
+            });
+            toast.success("Visita salva com sucesso!");
+        } catch (error) {
+            throw error;
+        }
+    }
 
     async function patchVisitation(visitationId: string, visitationAreaId: string) {
         try {
@@ -221,6 +205,38 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
 
+    async function getPastCycles() {
+        try {
+            const response = await api.get(`/cycles`);
+            return response.data;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function getAgentes() {
+        try {
+            const response = await api.get(`/users`);
+            return response.data;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    
+    async function getVisitationAreas(userId: string, cycleId: string) {
+        try {
+            const response = await api.get(`/visitation-areas`, {
+                headers: {
+                    'user_id': userId,
+                    'cycle_id': cycleId
+                },
+            });
+            return response.data;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
         <AuthContext.Provider value={{
             user,
@@ -230,10 +246,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
             signUp,
             createCycle,
             createVisitationArea,
-            editVisitation,
             createVisitation,
+            editVisitation,
+            patchVisitation,
+            getPastCycles,
+            getAgentes,
             getVisitationAreas,
-            patchVisitation
         }}>
             {children}
         </AuthContext.Provider>

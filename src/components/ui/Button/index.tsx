@@ -34,28 +34,14 @@ export function Button({ loading, children, ...rest }: ButtonProps) {
 }
 
 
-export function BackButton({ href }) {
-  return (
-    <button className={styles.backButton}>
-      <Link href={href} className={styles.backButtonLink}>
-        <IoChevronBackOutline color="white" />
-        Voltar
-      </Link>
-    </button>
-  );
-}
-
-
 export function NewLabelButton({ href, label }) {
   return (
-    <button className={styles.newVisitButton}>
-      <Link href={href}
-        className={styles.newVisitButtonLink}
-      >
-        {label}
-        <LuPenSquare color="white" />
-      </Link>
-    </button>
+    <Link href={href}
+      className={styles.newLabelButton}
+    >
+      {label}
+      <LuPenSquare color="white" />
+    </Link>
   );
 }
 

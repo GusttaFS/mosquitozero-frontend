@@ -76,4 +76,4 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
       visitationAera: visitationAera.data
     }
   }
-});
+}, );

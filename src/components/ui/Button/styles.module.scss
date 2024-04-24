@@ -36,8 +36,7 @@
   }
 }
 
-.backButton,
-.newVisitButton,
+.newLabelButton,
 .saveButton,
 .editButton,
 .cancelButton {
@@ -53,7 +52,7 @@
   }
 }
 
-.backButtonLink,
+.newLabelButton,
 .newVisitButtonLink,
 .saveButton,
 .editButton,
@@ -62,18 +61,14 @@
   align-items: center;
 }
 
-.newVisitButtonLink,
+.newLabelButton,
 .saveButton,
 .editButton,
 .cancelButton {
   gap: 4px;
 }
 
-.backButton {
-  background: var(--light-blue);
-}
-
-.newVisitButton {
+.newLabelButton {
   background: var(--light-green);
 }
 

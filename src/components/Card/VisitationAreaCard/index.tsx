@@ -6,53 +6,50 @@ import { SlArrowRight } from "react-icons/sl";
 import { calculateProgress } from '@/src/utils/calculateProgress';
 
 
-export function VisitationAreaCard({ visitationArea }) {
+export function VisitationAreaCard({ href, visitationArea }) {
     const [hovered, setHovered] = useState(false);
 
     const progress = calculateProgress(visitationArea.completed_visitations, visitationArea.num_visitations);
 
     return (
-        <Link href={{
-            pathname: "agente/visitation/list",
-            query: { visitation_area_id: visitationArea.id },
-        }}
-            className={`${styles.areaCardContainer} ${hovered ? styles.hoverLink : ''}`}
+        <Link href={href}
+            className={`${styles.container} ${hovered ? styles.hoverLink : ''}`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
-            <div className={styles.areaCardRowContent}>
-                <div className={styles.areaCardContent}>
-                    {visitationArea?.data.codLocalidade && (
-                        <p>
-                            <span className={styles.label}>Cód. Localid.:</span>{" "}
-                            <b>{visitationArea.data.codLocalidade}</b>
-                        </p>
-                    )}
-                    {visitationArea?.data.nomeLocalidade && (
-                        <p>
-                            <span className={styles.label}>Nome Localid.:</span>{" "}
-                            <b>{visitationArea.data.nomeLocalidade}</b>
-                        </p>
-                    )}
-                    {visitationArea?.data.categLocalidade && (
+            <div className={styles.row}>
+                <div className={styles.content}>
+                    {visitationArea?.data?.catg_localidade && (
                         <p>
                             <span className={styles.label}>Categ. Localid.:</span>{" "}
-                            <b>{visitationArea.data.categLocalidade}</b>
+                            <b>{visitationArea.data.catg_localidade}</b>
                         </p>
                     )}
-                    {visitationArea?.data.zona && (
+                    {visitationArea?.data?.nome_localidade && (
+                        <p>
+                            <span className={styles.label}>Nome Localid.:</span>{" "}
+                            <b>{visitationArea.data.nome_localidade}</b>
+                        </p>
+                    )}
+                    {visitationArea?.data?.cdg_localidade && (
+                        <p>
+                            <span className={styles.label}>Código:</span>{" "}
+                            <b>{visitationArea.data.cdg_localidade}</b>
+                        </p>
+                    )}
+                    {visitationArea?.data?.zona && (
                         <p>
                             <span className={styles.label}>Zona:</span>{" "}
                             <b>{visitationArea.data.zona}</b>
                         </p>
                     )}
-                    {visitationArea?.data.municipio && (
+                    {visitationArea?.data?.municipio && (
                         <p>
                             <span className={styles.label}>Município:</span>{" "}
                             <b>{visitationArea.data.municipio}</b>
                         </p>
                     )}
-                    {visitationArea?.data.atividade && (
+                    {visitationArea?.data?.atividade && (
                         <p>
                             <span className={styles.label}>Atividade:</span>{" "}
                             <b>{visitationArea.data.atividade}</b>
@@ -70,7 +67,6 @@ export function VisitationAreaCard({ visitationArea }) {
                 </div>
                 <p>{progress}%</p>
             </div>
-
         </Link>
     );
 }

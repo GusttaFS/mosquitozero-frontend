@@ -12,9 +12,9 @@ export function Header() {
     const firstName = user?.name.split(" ")[0];
 
     return (
-        <header className={styles.headerContainer}>
-            <div className={styles.headerContent}>
-                <Link href="" className={styles.pefilLink}>
+        <header className={styles.container}>
+            <div className={styles.content}>
+                <Link href="/" className={styles.pefilLink}>
                     <VscAccount />
                     <p>{firstName}</p>
                 </Link>

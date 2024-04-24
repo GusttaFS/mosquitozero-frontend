@@ -22,19 +22,8 @@
     z-index: 100;
 }
 
-.row {
-    display: flex;
-    flex-direction: row;
-}
-
-.optionsButtons {
+.details {
     margin-top: 2rem;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.agenteDetails {
-    margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
     width: 90%;
@@ -43,14 +32,24 @@
     justify-content: center;
 }
 
-.title {
+.attAreaButton {
+    width: 100%;
     margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.title {
+    margin-top: 1.5rem;
     font-size: 18px;
     opacity: 0.8;
 }
 
 .list {
-    margin-top: 220px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 270.6px;
     width: 550px;
     margin-left: auto;
     margin-right: auto;
@@ -71,7 +70,7 @@
     }
 
     .options {
-        width: 92%;
+        width: 95%;
     }
 
     .list {

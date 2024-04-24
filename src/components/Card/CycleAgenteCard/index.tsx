@@ -7,7 +7,7 @@ import { AuthContext } from '@/src/contexts/AuthContext';
 import { VisitationAreaCard } from '../VisitationAreaCard';
 
 
-export function CycleCard({ cycle, cycleId }) {
+export function CycleAgenteCard({ cycle, cycleId }) {
     const { getVisitationAreas } = useContext(AuthContext);
 
     const [expandedIndex, setExpandedIndex] = useState(null);
@@ -39,7 +39,7 @@ export function CycleCard({ cycle, cycleId }) {
             {expandedIndex === cycleId && (
                 <div className={styles.visitationAreasList}>
                     {visitationAreas.map((visitationArea) => (
-                        <VisitationAreaCard visitationArea={visitationArea} />
+                        <VisitationAreaCard visitationArea={visitationArea} href={"/"} />
                     ))}
                 </div>
             )}

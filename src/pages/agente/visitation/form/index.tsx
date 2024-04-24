@@ -195,4 +195,4 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
       visitation: {}
     }
   }
-});
+}, 'supervisor');

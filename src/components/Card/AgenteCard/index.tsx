@@ -13,11 +13,11 @@ export function AgenteCard({ agente, cycleId }) {
             pathname: "/supervisor/area/list",
             query: { cycle_id: cycleId, user_id: agente.id },
         }}
-            className={`${styles.containerCenter} ${hovered ? styles.hoverLink : ''}`}
+            className={`${styles.container} ${hovered ? styles.hoverLink : ''}`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
-            <div className={styles.rowContent}>
+            <div className={styles.row}>
                 <div className={styles.content}>
                     {agente?.name && (
                         <p>

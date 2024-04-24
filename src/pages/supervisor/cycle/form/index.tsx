@@ -9,10 +9,11 @@ import { Header } from "@/src/components/Header";
 import { BackButton, SaveButton } from "@/src/components/ui/Button";
 import { Input } from "@/src/components/ui/Input";
 import { toast } from "react-toastify";
+import router from "next/router";
 
 
 
-export default function Cycle() {
+export default function CycleForm() {
   const { createCycle } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
@@ -39,10 +40,12 @@ export default function Cycle() {
     event.preventDefault();
   
     if (!formData.data?.ano || !formData.data?.ciclo) {
+      toast.dismiss();
       toast.error('Preencha todos os campos');
     } else {
       try {
         await createCycle(formData);
+        router.back();
       } catch (e) {
         console.log(e);
       }
@@ -61,16 +64,15 @@ export default function Cycle() {
 
         <div className={styles.content}>
           <div className={styles.options}>
-            <div className={`${styles.row} ${styles.optionsButtons}`}>
-              <BackButton href={'/supervisor/home'} />
+            <p className={styles.title}>CRIANDO NOVO CICLO</p>
+            <div className={styles.saveButton}>
               <SaveButton onClick={handleSubmit} />
             </div>
-            <p className={styles.title}>NOVO CICLO</p>
           </div>
 
-          <form className={`${styles.row} ${styles.form}`}>
+          <form className={styles.form}>
             <Input
-              label={"Ciclo"}
+              label={"Ciclo:"}
               name="data.ciclo"
               placeholder="Ex.: 01"
               labelColor="black"
@@ -78,7 +80,7 @@ export default function Cycle() {
               onChange={handleInputChange}
             />
             <Input
-              label={"Ano"}
+              label={"Ano:"}
               name="data.ano"
               labelColor="black"
               placeholder="Ex.: 2024"

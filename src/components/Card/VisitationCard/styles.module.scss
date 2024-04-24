@@ -1,4 +1,4 @@
-.containerCenter {
+.container {
     background: var(--white);
     height: auto;
     width: 100%;
@@ -19,7 +19,7 @@
     font-size: 14px;
 }
 
-.rowContent {
+.row {
     width: 100%;
     display: flex;
     flex-direction: row;

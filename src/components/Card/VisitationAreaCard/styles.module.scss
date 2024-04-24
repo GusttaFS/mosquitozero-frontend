@@ -1,4 +1,4 @@
-.areaCardContainer {
+.container {
     background: var(--white);
     height: auto;
     width: 100%;
@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-.areaCardRowContent {
+.row {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -18,7 +18,7 @@
     width: 100%;
 }
 
-.areaCardContent {
+.content {
     display: flex;
     flex-direction: column;
     gap: 3px;

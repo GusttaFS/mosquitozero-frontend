@@ -32,17 +32,17 @@ export default function Home({ activeCycle, agentes }) {
               <p>Cilco atual:</p>
               <b>{activeCycle?.data?.ciclo} / {activeCycle?.data?.ano}</b>
             </div>
-            <Link href={"/supervisor/cycles"} className={styles.pastCyclesLink}>
+            <Link href={"/supervisor/cycle/list"} className={styles.pastCyclesLink}>
               <p>Acessar ciclos anteriores</p>
               <SlArrowRight size={9} />
             </Link>
             <div className={styles.newCycleButton}>
-              <NewLabelButton href={"/supervisor/cycle"} label={"Novo Ciclo"} />
+              <NewLabelButton href={"/supervisor/cycle/form"} label={"Novo Ciclo"} />
             </div>
             <p className={styles.title}>Agentes:</p>
           </div>
 
-          <div className={styles.visitationAreasList}>
+          <div className={styles.list}>
             {agentes && agentes.length > 0 ? (
               agentes.map((agente: AgenteData) => (
                 <AgenteCard
@@ -62,6 +62,7 @@ export default function Home({ activeCycle, agentes }) {
     </>
   );
 }
+
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
   const apiClient = setupAPIClient(ctx);

@@ -18,38 +18,47 @@
     width: 600px;
     position: fixed;
     background: var(--white-smoke);
-    padding-bottom: 1rem;
-    z-index: 100;
+    padding-bottom: 8px;
 }
 
-.row {
-    display: flex;
-    flex-direction: row;
-}
-
-.optionsButtons {
+.cycleInfo {
     margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 550px;
+    display: flex;
     justify-content: space-between;
-    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    font-size: 18px;
+    color: var(--black);
 }
 
 .title {
-    margin-left: auto;
-    margin-right: auto;
     margin-top: 1.5rem;
-    width: fit-content;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 18px;
+    opacity: 0.8;
 }
 
-.form {
-    margin-top: 135px;
+.list {
     width: 550px;
+    margin-top: 130px;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
     margin-bottom: 2rem;
 }
+
+.message {
+    font-size: 18px;
+    color: #888;
+    text-align: center;
+    margin-top: 40px;
+}
+
 
 @media (max-width: 650px) {
     .content {
@@ -57,10 +66,15 @@
     }
 
     .options {
-        width: 92%;
+        width: 95%;
     }
 
-    .form {
+    .cycleInfo, .list {
         width: 90%;
     }
+
+    .message {
+        font-size: 16px;
+        width: 85%;
+    }  
 }

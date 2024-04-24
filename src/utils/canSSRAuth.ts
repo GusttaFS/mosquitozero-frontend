@@ -29,12 +29,13 @@ export function canSSRAuth<P>(fn: GetServerSideProps<P>, authType: string) {
                     }
                 }
             }
+            
         }
 
         try {
             return await fn(ctx);
-        } catch (err) {
-            if (err instanceof AuthTokenError) {
+        } catch (e) {
+            if (e instanceof AuthTokenError) {
                 destroyCookie(ctx, '@nextauth.token');
                 return {
                     redirect: {

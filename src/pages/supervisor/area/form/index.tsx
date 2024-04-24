@@ -3,25 +3,27 @@ import Head from "next/head";
 import styles from './styles.module.scss';
 import { canSSRAuth } from "@/src/utils/canSSRAuth";
 import { Header } from "@/src/components/Header";
-import { BackButton, SaveButton } from "@/src/components/ui/Button";
+import { SaveButton } from "@/src/components/ui/Button";
 import { setupAPIClient } from "@/src/services/api";
 import { AgenteDetails } from "@/src/components/Card/AgenteDetails";
 import { AreaSection } from "@/src/components/Section/AreaSection";
 import { AuthContext } from "@/src/contexts/AuthContext";
+import { toast } from "react-toastify";
+import router from "next/router";
 
 
-export default function AreaList({ cycle_id, user_id, agente }) {
+export default function AreaForm({ cycle_id, user_id, agente, cycle }) {
   const { createVisitationArea } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     data: {
       cdg_localidade: "",
       nome_localidade: "",
-      catg_localidae: "",
-      municipio: "",
+      catg_localidade: "",
+      municipio: "Campina Grande",
       zona: "",
       tipo: { "value": "Sede", "label": "Sede" },
-      atividade: { "value": "LI", "label": "LI-Levantamento de índice" }
+      atividade: { "value": "LI-Levantamento de índice", "label": "LI-Levantamento de índice" }
     }
   });
 
@@ -40,19 +42,26 @@ export default function AreaList({ cycle_id, user_id, agente }) {
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    const data = {
-      ...formData,
-      data: {
-        ...formData.data,
-        tipo: formData.data.tipo.value,
-        atividade: formData.data.atividade.value,
-      }
-    };
+    const isFormValid = Object.values(formData.data).every(value => value !== "");
+    if (!isFormValid) {
+      toast.dismiss();
+      toast.error('Preencha todos os campos');
+    } else {
+      const data = {
+        ...formData,
+        data: {
+          ...formData.data,
+          tipo: formData.data.tipo.value,
+          atividade: formData.data.atividade.value,
+        }
+      };
 
-    try {
-      await createVisitationArea(cycle_id, user_id, data);
-    } catch (e) {
-      console.log(e);
+      try {
+        await createVisitationArea(cycle_id, user_id, data);
+        router.back();
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 
@@ -68,22 +77,25 @@ export default function AreaList({ cycle_id, user_id, agente }) {
 
         <div className={styles.content}>
           <div className={styles.options}>
-            <div className={`${styles.row} ${styles.optionsButtons}`}>
-              <BackButton href={{
-                pathname: "/supervisor/area/list",
-                query: { cycle_id: cycle_id, user_id: user_id },
-              }}
+            <div className={styles.details}>
+              <AgenteDetails
+                agente={agente}
+                visitationAreas={undefined}
+                cycle={cycle}
               />
+            </div>
+            <p className={styles.title}>ATRIBUINDO NOVA ÁREA DE VISITA</p>
+            <div className={styles.saveButton}>
               <SaveButton onClick={handleSubmit} />
             </div>
-            <div className={styles.agenteDetails}>
-              <AgenteDetails agente={agente} />
-            </div>
-            <p className={styles.title}>ATRIBUINDO ÁREA DE VISITA</p>
           </div>
 
           <form className={styles.form}>
-            <AreaSection handleInputChange={handleInputChange} formData={formData} setFormData={setFormData} />
+            <AreaSection
+              handleInputChange={handleInputChange}
+              formData={formData}
+              setFormData={setFormData}
+            />
           </form>
         </div>
       </div>
@@ -97,9 +109,10 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
   const apiClient = setupAPIClient(ctx);
 
   let agente = {};
+  let cycle = {};
 
   try {
-    const response = await apiClient.get('/user', {
+    const response = await apiClient.get('/user/id', {
       headers: {
         'user_id': user_id,
       },
@@ -107,12 +120,17 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
     agente = response.data;
   } catch (e) { }
 
+  try {
+    const response = await apiClient.get('/cycle');
+    cycle = response.data;
+  } catch (e) { }
 
   return {
     props: {
       cycle_id: cycle_id,
       user_id: user_id,
-      agente: agente
+      agente: agente,
+      cycle: cycle
     }
   }
 }, 'supervisor');
