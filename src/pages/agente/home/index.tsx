@@ -13,7 +13,7 @@ type VisitationArea = {
 }
 
 
-export default function Home({ activeCycle, visitationAreas, user }) {
+export default function AgenteHome({ activeCycle, visitationAreas }) {
   return (
     <>
       <Head>
@@ -44,12 +44,11 @@ export default function Home({ activeCycle, visitationAreas, user }) {
                   href={{
                     pathname: "/agente/visitation/list",
                     query: {
-                      cycle_id: activeCycle?.id,
-                      user_id: user?.id,
+                      cycle_id: activeCycle.id,
                       visitation_area_id: visitationArea.id
                     },
                   }}
-                  key={visitationArea?.id}
+                  key={visitationArea.id}
                   visitationArea={visitationArea}
                 />
               ))
@@ -96,8 +95,7 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
   return {
     props: {
       activeCycle: activeCycle,
-      visitationAreas: visitationAreas,
-      user: user
+      visitationAreas: visitationAreas
     }
   }
 }, 'agente');

@@ -22,14 +22,6 @@
     padding-bottom: 1rem;
 }
 
-.addVisitButton {
-    width: 100%;
-    margin-top: 1rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
 .details {
     margin-left: auto;
     margin-right: auto;
@@ -37,6 +29,14 @@
     height: fit-content;
     display: flex;
     justify-content: center;
+}
+
+.addVisitButton {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .title {
@@ -47,12 +47,19 @@
 
 .list {
     width: 550px;
-    margin-top: 348.2px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+}
+
+.marginTopMax {
+    margin-top: 348.2px;
+}
+
+.marginTopMin {
+    margin-top: 297px;
 }
 
 .message {
@@ -61,7 +68,6 @@
     text-align: center;
     margin-top: 20px;
 }
-
 
 @media (max-width: 650px) {
     .content {

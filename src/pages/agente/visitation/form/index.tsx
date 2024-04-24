@@ -13,7 +13,7 @@ import { AmostraSection } from "@/src/components/Section/AmostraSection";
 import { TratamentoSection } from "@/src/components/Section/TratamentoSection";
 
 
-export default function VisitationForm({ visitation_area_id, visitation_id, visitation }) {
+export default function VisitationForm({ activeCycle, cycle_id, visitation_area_id, visitation_id, visitation }) {
   const { createVisitation, editVisitation } = useContext(AuthContext);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -29,7 +29,7 @@ export default function VisitationForm({ visitation_area_id, visitation_id, visi
     deposito: {
       a1: visitation?.deposito?.a1 || 0, a2: visitation?.deposito?.a2 || 0,
       b: visitation?.deposito?.b || 0, c: visitation?.deposito?.c || 0,
-      d1: visitation?.deposito?.d1 || 0, d2: visitation?.deposito?.d2 || 0, e: visitation?.deposito?.e || 0, 
+      d1: visitation?.deposito?.d1 || 0, d2: visitation?.deposito?.d2 || 0, e: visitation?.deposito?.e || 0,
       eliminado: visitation?.deposito?.eliminado || 0, inspecionados: visitation?.deposito?.inspecionados || 0
     },
     amostra: {
@@ -100,7 +100,7 @@ export default function VisitationForm({ visitation_area_id, visitation_id, visi
   return (
     <>
       <Head>
-        <title>MosquitoZero | Nova Visita</title>
+        <title>MosquitoZero | Visita</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
 
@@ -109,26 +109,30 @@ export default function VisitationForm({ visitation_area_id, visitation_id, visi
 
         <div className={styles.content}>
           <div className={styles.options}>
-            <div className={`${styles.row} ${styles.optionsButtons}`}>
-              <div className={styles.optionsEdit}>
-                {!isEditing && (
-                  <EditButton onClick={handleEditClick} />
-                )}
-                {isEditing && (
-                  <>
-                    <SaveButton onClick={handleSubmit} />
-                    <CanceltButton onClick={handleCancelClick} />
-                  </>
-                )}
-              </div>
-            </div>
-
-            <VisitationStatus visitation={visitation} visitationAreaId={visitation_area_id} />
+            {activeCycle?.id === cycle_id ? (
+              <>
+                <div className={styles.edit}>
+                  {!isEditing && (
+                    <EditButton onClick={handleEditClick} />
+                  )}
+                  {isEditing && (
+                    <>
+                      <SaveButton onClick={handleSubmit} />
+                      <CanceltButton onClick={handleCancelClick} />
+                    </>
+                  )}
+                </div>
+                <VisitationStatus
+                  visitation={visitation}
+                  visitationAreaId={visitation_area_id}
+                />
+              </>
+            ) : (<></>)}
 
             <p className={styles.title}>PESQUISA ENTOMOLÓGICA / TRATAMENTO</p>
           </div>
 
-          <form className={styles.form}>
+          <form className={`${styles.form} ${activeCycle.id !== cycle_id ? styles.marginTopMin : styles.marginTopMax}`}>
             <HeaderSection
               handleInputChange={handleInputChange}
               isEditing={isEditing}
@@ -162,31 +166,35 @@ export default function VisitationForm({ visitation_area_id, visitation_id, visi
 
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
-  const { visitation_area_id, visitation_id } = ctx.query;
+  const { cycle_id, visitation_area_id, visitation_id } = ctx.query;
   const apiClient = setupAPIClient(ctx);
 
-  if (visitation_id) {
-    const response = await apiClient.get(`/visitation`, {
-      headers: {
-        'visitation_id': visitation_id,
-      },
-    });
+  let activeCycle = { id: "" };
+  let visitation = {};
 
-    return {
-      props: {
-        visitation_id: visitation_id || "",
-        visitation_area_id: visitation_area_id || "",
-        visitation: response.data,
-      }
-    }
+  try {
+    const response = await apiClient.get('/cycle');
+    activeCycle = response.data;
+  } catch (e) { }
 
+  if (visitation_id !== "") {
+    try {
+      const response = await apiClient.get(`/visitation`, {
+        headers: {
+          'visitation_id': visitation_id,
+        },
+      });
+      visitation = response.data;
+    } catch (e) { }
   }
 
   return {
     props: {
-      visitation_id: visitation_id || "",
-      visitation_area_id: visitation_area_id || "",
-      visitation: {}
+      visitation_id: visitation_id,
+      visitation_area_id: visitation_area_id,
+      cycle_id: cycle_id,
+      activeCycle: activeCycle,
+      visitation: visitation
     }
   }
 }, 'agente');

@@ -13,7 +13,7 @@ type Visitation = {
 }
 
 
-export default function VisitationList({ cycle_id, user_id, visitation_area_id, cycle, visitationArea, visitations }) {
+export default function VisitationList({ activeCycle, cycle, visitationArea, visitations }) {
   return (
     <>
       <Head>
@@ -28,33 +28,42 @@ export default function VisitationList({ cycle_id, user_id, visitation_area_id, 
           <div className={styles.options}>
             <div className={styles.details}>
               <VisitationAreaDetails
-                visitationArea={visitationArea}
                 cycle={cycle}
+                visitationArea={visitationArea}
               />
             </div>
-            <div className={styles.addVisitButton}>
-              <NewLabelButton
-                href={{
-                  pathname: "/agente/visitation/form",
-                  query: {
-                    cycle_id: cycle_id,
-                    user_id: user_id,
-                    visitation_area_id: visitation_area_id
-                  },
-                }}
-                label={"Adicionar visita"}
-              />
-            </div>
+            {activeCycle?.id === cycle?.id ? (
+              <div className={styles.addVisitButton}>
+                <NewLabelButton
+                  href={{
+                    pathname: "/agente/visitation/form",
+                    query: {
+                      cycle_id: cycle?.id,
+                      visitation_area_id: visitationArea?.id,
+                      visitation_id: ""
+                    },
+                  }}
+                  label={"Adicionar visita"}
+                />
+              </div>) : (<></>)}
             <p className={styles.title}>Suas visitas:</p>
           </div>
 
-          <div className={styles.list}>
+          <div className={`${styles.list} ${activeCycle.id !== cycle.id ? styles.marginTopMin : styles.marginTopMax}`}>
             {visitations.length === 0 ? (
               <p className={styles.message}>Sem visitas nessa área.</p>
             ) : (
               visitations.map((visitation: Visitation) => (
                 <VisitationCard
-                  href={"/"}
+                  href={{
+                    pathname: "/agente/visitation/form",
+                    query: {
+                      cycle_id: cycle.id,
+                      visitation_area_id: visitationArea.id,
+                      visitation_id: visitation.id
+                    },
+                  }}
+                  key={visitation.id}
                   visitation={visitation}
                 />
               ))
@@ -68,12 +77,18 @@ export default function VisitationList({ cycle_id, user_id, visitation_area_id, 
 
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
-  const { cycle_id, user_id, visitation_area_id } = ctx.query;
+  const { cycle_id, visitation_area_id } = ctx.query;
   const apiClient = setupAPIClient(ctx);
 
-  let cycle = {};
-  let visitationArea = {};
+  let cycle = { id: "" };
+  let activeCycle = { id: "" };
+  let visitationArea = { id: "" };
   let visitations = [];
+
+  try {
+    const response = await apiClient.get('/cycle');
+    activeCycle = response.data;
+  } catch (e) { }
 
   try {
     const response = await apiClient.get('/cycle/id', {
@@ -104,9 +119,7 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
 
   return {
     props: {
-      cycle_id: cycle_id,
-      user_id: user_id,
-      visitation_area_id: visitation_area_id,
+      activeCycle: activeCycle,
       cycle: cycle,
       visitationArea: visitationArea,
       visitations: visitations
