@@ -40,7 +40,7 @@ export function TratamentoSection({ handleInputChange, isEditing, formData }) {
             <div className={styles.tratamento}>
                 <p className={styles.focal}>Focal</p>
                 {larvicidas.map((larvicida, index) => (
-                    <div className={styles.larvicidaContainer}>
+                    <div key={index} className={styles.larvicidaContainer}>
                         <b className={styles.subtitle}>Larvicida({index + 1})</b>
                         <div className={styles.larvicidadeInfo}>
                             <div className={styles.InfoTop}>

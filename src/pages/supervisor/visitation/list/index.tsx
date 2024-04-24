@@ -37,8 +37,12 @@ export default function VisitationList({ cycle_id, user_id, visitation_area_id, 
             <div className={styles.addVisitationButton}>
               <NewLabelButton
                 href={{
-                  pathname: "/supervisor/area/form",
-                  query: { cycle_id: cycle_id, user_id: user_id },
+                  pathname: "/supervisor/visitation/form",
+                  query: { 
+                    cycle_id: cycle_id, 
+                    user_id: user_id,
+                    visitation_area_id: visitation_area_id
+                  },
                 }}
                 label={"Adicionar Visita"}
               />

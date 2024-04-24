@@ -2,30 +2,59 @@ import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import Head from "next/head";
 import styles from './styles.module.scss';
 import { canSSRAuth } from "@/src/utils/canSSRAuth";
+import { setupAPIClient } from "@/src/services/api";
+import { AuthContext } from "@/src/contexts/AuthContext";
 import { Header } from "@/src/components/Header";
 import { SaveButton } from "@/src/components/ui/Button";
-import { setupAPIClient } from "@/src/services/api";
+import { HeaderSection } from "@/src/components/Section/HeaderSection";
 import { AgenteDetails } from "@/src/components/Card/AgenteDetails";
-import { AreaSection } from "@/src/components/Section/AreaSection";
-import { AuthContext } from "@/src/contexts/AuthContext";
+import { VisitationSection } from "@/src/components/Section/VisitationSection";
+import { VisitationAreaDetails } from "@/src/components/Card/VisitationAreaDetails";
 import { toast } from "react-toastify";
 import router from "next/router";
 
 
-export default function AreaForm({ cycle_id, user_id, agente, cycle }) {
-  const { createVisitationArea } = useContext(AuthContext);
+export default function VisitationForm({ agente, cycle, visitation_area_id, visitationArea }) {
+  const { createVisitation } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     data: {
-      cdg_localidade: "",
-      nome_localidade: "",
-      catg_localidade: "",
-      municipio: "Campina Grande",
-      zona: "",
-      tipo: { "value": "Sede", "label": "Sede" },
-      atividade: { "value": "LI-Levantamento de índice", "label": "LI-Levantamento de índice" }
-    }
+      quarteirao: "", lado: "", logradouro: "", numero: "", complemento: "",
+      imovel: { "value": "Residencial", "label": "Residencial" },
+      visita: { "value": "Normal", "label": "Normal" }
+    },
+    deposito: { value: "" }, amostra: { value: "" }, tratamento: { value: "" }
   });
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    const data = {
+      ...formData,
+      data: {
+        ...formData.data,
+        imovel: formData.data.imovel.value,
+        visita: formData.data.visita.value,
+      }
+    };
+
+    const isdataValid = Object.values(data.data).every(value => {
+      if (value === undefined) return false;
+      const trimmedValue = value.trim();
+      return trimmedValue !== "";
+    });
+
+    if (!isdataValid) {
+      toast.dismiss();
+      toast.error('Preencha todos os campos');
+    } else {
+      try {
+        await createVisitation(visitation_area_id, data);
+        router.back();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -40,40 +69,11 @@ export default function AreaForm({ cycle_id, user_id, agente, cycle }) {
     }));
   };
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    const data = {
-      ...formData,
-      data: {
-        ...formData.data,
-        tipo: formData.data.tipo.value,
-        atividade: formData.data.atividade.value,
-      }
-    };
-
-    const isdataValid = Object.values(data.data).every(value => {
-      if (value === undefined) return false;
-      const trimmedValue = value.trim();
-      return trimmedValue !== ""; 
-    });
-    
-    if (!isdataValid) {
-      toast.dismiss();
-      toast.error('Preencha todos os campos');
-    } else {
-      try {
-        await createVisitationArea(cycle_id, user_id, data);
-        router.back();
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }
 
   return (
     <>
       <Head>
-        <title>MosquitoZero | Suas Áreas</title>
+        <title>MosquitoZero | Atribuir Visita</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
 
@@ -86,17 +86,21 @@ export default function AreaForm({ cycle_id, user_id, agente, cycle }) {
               <AgenteDetails
                 agente={agente}
                 visitationAreas={undefined}
+                cycle={undefined}
+              />
+              <VisitationAreaDetails
+                visitationArea={visitationArea}
                 cycle={cycle}
               />
             </div>
-            <p className={styles.title}>ATRIBUINDO NOVA ÁREA DE VISITA</p>
+            <p className={styles.title}>ATRIBUINDO NOVA VISITA</p>
             <div className={styles.saveButton}>
               <SaveButton onClick={handleSubmit} />
             </div>
           </div>
 
           <form className={styles.form}>
-            <AreaSection
+            <VisitationSection
               handleInputChange={handleInputChange}
               formData={formData}
               setFormData={setFormData}
@@ -106,15 +110,17 @@ export default function AreaForm({ cycle_id, user_id, agente, cycle }) {
       </div>
     </>
   );
-};
+}
 
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
-  const { cycle_id, user_id } = ctx.query;
+  const { cycle_id, user_id, visitation_area_id } = ctx.query;
   const apiClient = setupAPIClient(ctx);
 
+  let visitation = {};
   let agente = {};
   let cycle = {};
+  let visitationArea = {};
 
   try {
     const response = await apiClient.get('/user/id', {
@@ -126,16 +132,29 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
   } catch (e) { }
 
   try {
-    const response = await apiClient.get('/cycle');
+    const response = await apiClient.get('/cycle/id', {
+      headers: {
+        cycle_id: cycle_id
+      },
+    });
     cycle = response.data;
+  } catch (e) { }
+
+  try {
+    const response = await apiClient.get('/visitation-area', {
+      headers: {
+        'visitation_area_id': visitation_area_id,
+      },
+    });
+    visitationArea = response.data;
   } catch (e) { }
 
   return {
     props: {
-      cycle_id: cycle_id,
-      user_id: user_id,
       agente: agente,
-      cycle: cycle
+      cycle: cycle,
+      visitation_area_id: visitation_area_id,
+      visitationArea: visitationArea
     }
   }
 }, 'supervisor');
