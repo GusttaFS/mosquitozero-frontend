@@ -43,6 +43,7 @@ type SignUpProps = {
     type: string;
 }
 
+
 type VisitationData = {
     data: Object;
     deposito: Object;
@@ -131,7 +132,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
 
-    async function signUp(data : SignUpProps) {
+    async function signUp(data: SignUpProps) {
         try {
             await api.post('/user', data);
             toast.success("Cadastro realizado com sucesso!")
@@ -222,7 +223,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             console.log(e);
         }
     }
-    
+
     async function getVisitationAreas(userId: string, cycleId: string) {
         try {
             const response = await api.get(`/visitation-areas`, {

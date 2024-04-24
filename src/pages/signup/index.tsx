@@ -24,12 +24,12 @@ export default function SignUp() {
     data: {
       telefone: ""
     },
-    cargo: { "value": "A", "label": "Agente" }
+    type: { "value": "agente", "label": "Agente" }
   });
 
-  const cargoOptions = [
-    { "value": "A", "label": "Agente" },
-    { "value": "S", "label": "Supervisor" },
+  const typeOptions = [
+    { "value": "agente", "label": "Agente" },
+    { "value": "supervisor", "label": "Supervisor" },
   ];
 
   const [loading, setLoading] = useState(false);
@@ -76,7 +76,7 @@ export default function SignUp() {
     event.preventDefault();
     const data = {
       ...formData,
-      cargo: formData.cargo.value
+      type: formData.type.value
     }
     setLoading(true);
     try {
@@ -154,9 +154,9 @@ export default function SignUp() {
 
             <Select
               label={"Cargo"}
-              options={cargoOptions}
-              value={formData.cargo}
-              onChange={(o) => setFormData({ ...formData, cargo: o })}
+              options={typeOptions}
+              value={formData.type}
+              onChange={(o) => setFormData({ ...formData, type: o })}
               disabled={false}
             />
 
