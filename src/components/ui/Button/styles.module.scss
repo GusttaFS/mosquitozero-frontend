@@ -37,6 +37,7 @@
 }
 
 .newLabelButton,
+.markButton,
 .saveButton,
 .editButton,
 .cancelButton {
@@ -53,7 +54,7 @@
 }
 
 .newLabelButton,
-.newVisitButtonLink,
+.markButton,
 .saveButton,
 .editButton,
 .cancelButton {
@@ -62,17 +63,20 @@
 }
 
 .newLabelButton,
+.markButton,
 .saveButton,
 .editButton,
 .cancelButton {
   gap: 4px;
 }
 
-.newLabelButton {
-  background: var(--light-green);
+.markButton {
+  margin-top: 8px;
+  padding: 4px 8px;
+  font-size: 14px;
 }
 
-.saveButton {
+.newLabelButton, .saveButton, .greenColor {
   background-color: var(--light-green);
 }
 
@@ -80,6 +84,6 @@
   background-color: var(--ligh-orange);
 }
 
-.cancelButton {
+.cancelButton, .redColor {
   background-color: var(--light-red);
 }

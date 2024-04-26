@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import styles from './styles.module.scss';
 import { AuthContext } from '@/src/contexts/AuthContext';
 import { TagCompleted, TagPending } from '../../Tag';
+import { MarkButton } from '../../ui/Button';
 
 
 export function VisitationStatus({ visitation, visitationAreaId }) {
@@ -13,9 +14,7 @@ export function VisitationStatus({ visitation, visitationAreaId }) {
         try {
             const response = await patchVisitation(visitation.id, visitationAreaId);
             setCompleted(response?.is_completed);
-        } catch (e) {
-            console.log(e);
-        }
+        } catch (e) { }
     };
 
     return (
@@ -25,10 +24,23 @@ export function VisitationStatus({ visitation, visitationAreaId }) {
                 {completed ? <TagCompleted /> : <TagPending />}
             </p>
             <div className={styles.row}>
-                <p>{completed ? 'Marcar como pendente?' : 'Marcar como concluída?'}</p>
-                <button className={styles.button} onClick={handleSetStatus}>
-                    Sim
-                </button>
+                <div>{completed ?
+                    (<>
+                        <p>Marcar visita como: </p>
+                        <MarkButton
+                            onClick={handleSetStatus}
+                            label={"Pendente"}
+                            type={"pendente"} />
+                    </>) :
+                    (<>
+                        <p>Marcar visita como: </p>
+                        <MarkButton
+                            onClick={handleSetStatus}
+                            label={"Concluída"}
+                            type={"check"} />
+                    </>)}
+                </div>
+
             </div>
         </div>
     );

@@ -1,13 +1,12 @@
 import { ReactNode, ButtonHTMLAttributes } from 'react';
 import styles from './styles.module.scss';
-
 import Link from 'next/link';
 import { FaSpinner } from 'react-icons/fa'
-import { IoChevronBackOutline } from 'react-icons/io5';
 import { LuPenSquare } from 'react-icons/lu';
 import { VscSaveAs } from 'react-icons/vsc';
 import { MdOutlineCancel } from 'react-icons/md';
-import { IoMdAdd } from 'react-icons/io';
+import { BsClipboard2Check, BsClipboard2X } from 'react-icons/bs';
+
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean,
@@ -45,6 +44,17 @@ export function NewLabelButton({ href, label }) {
   );
 }
 
+export function MarkButton({ onClick, label, type }) {
+  return (
+    <button
+      className={`${styles.markButton} ${type == 'check' ? styles.greenColor : styles.redColor}`}
+      onClick={onClick}
+    >
+      {type === 'check' ? (<BsClipboard2Check />) : (<BsClipboard2X />)}
+      {label}
+    </button>
+  );
+}
 
 export function SaveButton({ onClick }) {
   return (
