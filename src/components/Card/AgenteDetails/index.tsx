@@ -1,5 +1,6 @@
 import { calculateAreasProgress } from '@/src/utils/calculateProgress';
 import styles from './styles.module.scss';
+import { VscAccount } from 'react-icons/vsc';
 
 
 export function AgenteDetails({ agente, cycle, visitationAreas }) {
@@ -9,18 +10,24 @@ export function AgenteDetails({ agente, cycle, visitationAreas }) {
     return (
         <div className={styles.container}>
             <div className={styles.content}>
-                {agente?.name && (
-                    <p>
-                        <span className={styles.label}>Nome:</span>{" "}
-                        <b>{agente.name}</b>
-                    </p>
-                )}
-                {agente?.email && (
-                    <p>
-                        <span className={styles.label}>E-mail:</span>{" "}
-                        <b>{agente.email}</b>
-                    </p>
-                )}
+                <div className={styles.userInfo}>
+                    <VscAccount size={34} color='#757575'/>
+                    <div>
+                        {agente?.name && (
+                            <p>
+                                <span className={styles.label}>Nome:</span>{" "}
+                                <b>{agente.name}</b>
+                            </p>
+                        )}
+                        {agente?.email && (
+                            <p>
+                                <span className={styles.label}>E-mail:</span>{" "}
+                                <b>{agente.email}</b>
+                            </p>
+                        )}
+                    </div>
+                </div>
+
                 {cycle?.data && (
                     <p>
                         <span className={styles.label}>Ciclo:</span>{" "}

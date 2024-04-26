@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from './styles.module.scss';
 import { SlArrowRight } from "react-icons/sl";
 import { AuthContext } from '@/src/contexts/AuthContext';
+import { VscAccount } from 'react-icons/vsc';
 
 
 export function AgenteCard({ agente, cycleId }) {
@@ -35,18 +36,24 @@ export function AgenteCard({ agente, cycleId }) {
         >
             <div className={styles.row}>
                 <div className={styles.content}>
-                    {agente?.name && (
-                        <p>
-                            <span className={styles.label}>Nome:</span>{" "}
-                            <b>{agente.name}</b>
-                        </p>
-                    )}
-                    {agente?.email && (
-                        <p>
-                            <span className={styles.label}>E-mail:</span>{" "}
-                            <b>{agente.email}</b>
-                        </p>
-                    )}
+                    <div className={styles.userInfo}>
+                        <VscAccount size={34} color='#757575' />
+                        <div>
+                            {agente?.name && (
+                                <p>
+                                    <span className={styles.label}>Nome:</span>{" "}
+                                    <b>{agente.name}</b>
+                                </p>
+                            )}
+                            {agente?.email && (
+                                <p>
+                                    <span className={styles.label}>E-mail:</span>{" "}
+                                    <b>{agente.email}</b>
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
 
                     {totalAreas !== null && (
                         <p>
