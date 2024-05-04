@@ -2,8 +2,10 @@
 
 O Mosquito Zero faz parte do meu projeto de Trabalho de Conclusão de Curso, que consiste em uma plataforma web para auxiliar o trabalho dos agentes de vigilância e seus supervisores no registro, na visualização e no acompanhamento das pesquisas realizadas por esses proficionais, para identificação de focos de mosquitos transmissores de doenças.
 
+[API do projeto](https://github.com/GusttaFS/mosquitozero-backend)
+
 ## Pré-requisitos
-O Node.js[https://nodejs.org] e o Yarn[https://yarnpkg.com/] instalados em sua máquina.
+O [Node.js](https://nodejs.org) e o [Yarn](https://yarnpkg.com/) instalados em sua máquina.
 
 ## Configuração
 1. Clone este repositório para o seu ambiente local.
