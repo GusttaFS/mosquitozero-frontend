@@ -28,7 +28,7 @@ yarn install
 yarn build
 ````
 
-## Executando a aplicação
+## Executando
 1. Após a instalação das dependências, execute comando para iniciar a aplicação:
 ````
 yarn start
